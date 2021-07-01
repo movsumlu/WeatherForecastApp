@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "npm run build",
-    "fix by linter": "eslint --ext .js,.vue src --fix"
+    "lint --fix": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
     "core-js": "^3.6.5",
