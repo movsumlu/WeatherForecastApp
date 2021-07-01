@@ -251,20 +251,20 @@ export default {
     border-radius: 2px;
   }
 
-  &--search input {
-    width: 254px;
-    padding: 8px 20px;
-    color: var(--color-text-input);
-    background-color: var(--color-input-base);
-    border: none;
-    outline: none;
-    transition: background-color var(--transition-base);
-    &hover {
-      background-color: var(--color-input-hover);
-    }
-  }
-
   &--search {
+    input {
+      width: 254px;
+      padding: 8px 20px;
+      color: var(--color-text-input);
+      background-color: var(--color-input-base);
+      border: none;
+      outline: none;
+      transition: background-color var(--transition-base);
+      &hover {
+        background-color: var(--color-input-hover);
+      }
+    }
+
     input:focus::placeholder,
     input:focus::-ms-input-placeholder {
       opacity: 0;

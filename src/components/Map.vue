@@ -30,6 +30,12 @@ export default {
   transition: background-color var(--transition-base),
     border var(--transition-base), box-shadow var(--transition-base);
 
+  &--temporarily {
+    position: relative;
+    top: 50%;
+    left: 50%;
+  }
+
   &:hover {
     background-color: var(--color-blue-light);
   }
@@ -39,12 +45,6 @@ export default {
     border: 4px solid var(--color-white);
     box-shadow: 0 0 0 4px var(--color-blue-main),
       0 8px 20px rgba(11, 23, 78, 0.5);
-  }
-
-  &--temporarily {
-    position: relative;
-    top: 50%;
-    left: 50%;
   }
 }
 </style>
