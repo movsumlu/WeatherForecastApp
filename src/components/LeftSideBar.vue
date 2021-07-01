@@ -38,21 +38,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "LeftSideBar",
   async created() {
-    await this.getСities();
+    await this.fetchCities();
   },
   computed: {
-    cities() {
-      return JSON.parse(JSON.stringify(this.$store.state.cities));
-    },
+    ...mapGetters({
+      cities: "cities",
+    }),
   },
   methods: {
     ...mapActions({
-      getСities: "getСities",
+      fetchCities: "fetchCities",
     }),
   },
 };
