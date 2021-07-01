@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "npm run build",
     "lint --fix": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
