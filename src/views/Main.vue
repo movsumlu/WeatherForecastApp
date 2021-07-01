@@ -55,13 +55,11 @@ export default {
   &__content {
     position: relative;
     z-index: 1;
-
     flex-shrink: 0;
     width: 712px;
     height: 100vh;
     min-height: 880px;
     overflow: hidden;
-
     background: var(--color-blue-lightest);
     box-shadow: 0 0 40px rgba(11, 23, 78, 0.5);
   }

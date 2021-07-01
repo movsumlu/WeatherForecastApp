@@ -142,12 +142,10 @@ export default {
   align-items: center;
   width: 350px;
   padding: 16px 20px;
-
   background-color: var(--color-light-grey);
   border-radius: 2px;
   outline: none;
   cursor: pointer;
-
   transition: background-color var(--transition-base),
     filter var(--transition-base);
 }
@@ -164,17 +162,14 @@ export default {
 .small-card__city {
   flex-grow: 1;
   margin-right: 20px;
-
   transition: color var(--transition-base);
 }
 
 .small-card__temperature {
   margin-right: 20px;
-
   font-size: 24px;
   line-height: 24px;
   letter-spacing: -0.02em;
-
   transition: color var(--transition-base);
 }
 
