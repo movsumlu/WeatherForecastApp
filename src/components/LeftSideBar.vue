@@ -56,7 +56,6 @@
           <span class="big-card__temperature">+12°</span>
         </div>
       </div>
-      <div class="big-card big-card--empty"></div>
     </div>
   </section>
 </template>
@@ -206,42 +205,66 @@ export default {
   align-items: center;
   width: 350px;
   min-height: 172px;
-
   border-radius: 2px;
   outline: none;
   cursor: pointer;
-
   transition: filter var(--transition-base);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px 20px 14px 20px;
+    background-color: var(--color-white);
+    transition: background-color var(--transition-base);
+  }
+
+  &__city {
+    margin-left: 20px;
+    font-size: 30px;
+    line-height: 36px;
+    transition: color var(--transition-base);
+  }
+
+  &__wind {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  &__temperature {
+    margin-left: auto;
+    font-size: 64px;
+    line-height: 62px;
+    letter-spacing: -0.05em;
+    opacity: 0.8;
+    transition: color var(--transition-base);
+  }
+
+  &--empty {
+    pointer-events: none;
+    min-height: 172px;
+    background-color: rgba(247, 248, 255, 0.3);
+    border: 2px dashed var(--color-border);
+
+    &.hidden-block {
+      display: none;
+    }
+  }
+
+  &--shadow {
+    pointer-events: none;
+    opacity: 0.3;
+    background-color: var(--color-blue-light);
+  }
 }
 
-.big-card__header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 20px 20px 14px 20px;
-
-  background-color: var(--color-white);
-
-  transition: background-color var(--transition-base);
-}
-
-.big-card__city {
-  margin-left: 20px;
-
-  font-size: 30px;
-  line-height: 36px;
-
-  transition: color var(--transition-base);
-}
-
-.big-card__content {
+.big-card .big-card__content {
   display: flex;
   align-items: center;
   width: 100%;
   padding: 16px 24px 24px 20px;
-
   background-color: var(--color-light-grey);
-
   transition: background-color var(--transition-base);
 }
 
@@ -261,31 +284,10 @@ export default {
   margin-right: 0;
 }
 
-.big-card__wind {
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-}
-
 .big-card__wind-info {
   margin-left: 10px;
-
   color: var(--color-text-light-blue);
-
   opacity: 0.8;
-
-  transition: color var(--transition-base);
-}
-
-.big-card__temperature {
-  margin-left: auto;
-
-  font-size: 64px;
-  line-height: 62px;
-  letter-spacing: -0.05em;
-
-  opacity: 0.8;
-
   transition: color var(--transition-base);
 }
 
@@ -310,12 +312,6 @@ export default {
   filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
 }
 
-.big-card--shadow {
-  pointer-events: none;
-  opacity: 0.3;
-  background-color: var(--color-blue-light);
-}
-
 .big-card--shadow .big-card__header {
   background-color: var(--color-transparent);
 }
@@ -328,16 +324,5 @@ export default {
 .big-card--shadow .big-card__temperature,
 .big-card--shadow .big-card__wind-info {
   color: var(--color-text-white);
-}
-
-.big-card--empty {
-  pointer-events: none;
-  min-height: 172px;
-  background-color: rgba(247, 248, 255, 0.3);
-  border: 2px dashed var(--color-border);
-}
-
-.big-card--empty.hidden-block {
-  display: none;
 }
 </style>

@@ -152,23 +152,23 @@ export default {
 <style lang="scss" scoped>
 .sort-form {
   display: flex;
-}
 
-.sort-form form {
-  display: flex;
-  min-width: 712px;
-  padding: 12px 20px;
+  form {
+    display: flex;
+    min-width: 712px;
+    padding: 12px 20px;
 
-  background-color: var(--color-blue-main);
-}
+    background-color: var(--color-blue-main);
+  }
 
-.sort-form__group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: start;
-  flex-shrink: 0;
-  margin-right: 20px;
-  margin-bottom: -2px;
+  &__group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    flex-shrink: 0;
+    margin-right: 20px;
+    margin-bottom: -2px;
+  }
 }
 
 .sort-form__group:last-child {
@@ -199,91 +199,79 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
+  &--arrow-down {
+    background-image: url("../assets/img/icons/icon-arrow-down.svg");
+  }
+
+  &--arrow-up {
+    background-image: url("../assets/img/icons/icon-arrow-up.svg");
+  }
+
+  &--rainy {
+    background-image: url("../assets/img/icons/icon-rainy.svg");
+  }
+
+  &--sunny {
+    background-image: url("../assets/img/icons/icon-sunny.svg");
+  }
+
+  &--cloudy {
+    background-image: url("../assets/img/icons/icon-cloudy.svg");
+  }
+
+  &--snowy {
+    background-image: url("../assets/img/icons/icon-snowy.svg");
+  }
+
+  &--stormy {
+    background-image: url("../assets/img/icons/icon-stormy.svg");
+  }
+
+  &--blizzard {
+    background-image: url("../assets/img/icons/icon-blizzard.svg");
+  }
+
+  &--metorite {
+    background-image: url("../assets/img/icons/icon-metorite.svg");
+  }
+
+  &--wind {
+    background-image: url("../assets/img/icons/icon-wind.svg");
+  }
 }
 
-.icon--arrow-down {
-  width: 20px;
-  height: 22px;
-
-  background-image: url("../assets/img/icons/icon-arrow-down.svg");
-}
-
-.icon--arrow-up {
-  width: 20px;
-  height: 22px;
-
-  background-image: url("../assets/img/icons/icon-arrow-up.svg");
-}
-
-.icon--strips-small {
+.icon .icon .icon--strips-small {
   width: 6px;
   height: 16px;
-
   background-image: url("../assets/img/icons/icon-strips-small.svg");
 }
 
 .icon--strips-big {
   width: 6px;
   height: 22px;
-
   background-image: url("../assets/img/icons/icon-strips-big.svg");
-}
-
-.icon--rainy {
-  background-image: url("../assets/img/icons/icon-rainy.svg");
-}
-
-.icon--sunny {
-  background-image: url("../assets/img/icons/icon-sunny.svg");
-}
-
-.icon--cloudy {
-  background-image: url("../assets/img/icons/icon-cloudy.svg");
-}
-
-.icon--snowy {
-  background-image: url("../assets/img/icons/icon-snowy.svg");
-}
-
-.icon--stormy {
-  background-image: url("../assets/img/icons/icon-stormy.svg");
-}
-
-.icon--blizzard {
-  background-image: url("../assets/img/icons/icon-blizzard.svg");
-}
-
-.icon--metorite {
-  background-image: url("../assets/img/icons/icon-metorite.svg");
-}
-
-.icon--wind {
-  background-image: url("../assets/img/icons/icon-wind.svg");
 }
 
 .input-wrapper {
   display: flex;
-}
 
-.input-wrapper input {
-  border-radius: 2px;
-}
+  input {
+    border-radius: 2px;
+  }
 
-.input-wrapper--search input {
-  width: 254px;
-  padding: 8px 20px;
-
-  color: var(--color-text-input);
-
-  background-color: var(--color-input-base);
-  border: none;
-  outline: none;
-
-  transition: background-color var(--transition-base);
-}
-
-.input-wrapper--search input:hover {
-  background-color: var(--color-input-hover);
+  &--search input {
+    width: 254px;
+    padding: 8px 20px;
+    color: var(--color-text-input);
+    background-color: var(--color-input-base);
+    border: none;
+    outline: none;
+    transition: background-color var(--transition-base);
+    &hover {
+      background-color: var(--color-input-hover);
+    }
+  }
 }
 
 .input-wrapper--search input:focus::placeholder {
@@ -306,7 +294,6 @@ export default {
 
 .input-wrapper--search input::-ms-input-placeholder {
   color: var(--color-text-placeholder);
-
   transition: opacity var(--transition-base);
 }
 
@@ -324,7 +311,6 @@ export default {
 
   transition: background-color var(--transition-base),
     box-shadow var(--transition-base);
-
   user-select: none;
 }
 
@@ -357,11 +343,9 @@ export default {
 .input-wrapper--radio input,
 .input-wrapper--checkbox input {
   position: absolute;
-
   width: 1px;
   height: 1px;
   margin: -1px;
-
   clip: rect(0 0 0 0);
 }
 
