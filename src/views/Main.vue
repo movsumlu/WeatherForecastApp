@@ -17,7 +17,7 @@
       <section class="weather-app">
         <div class="weather-app__content weather-content">
           <Header />
-          <LeftSideBar />
+          <Cards />
         </div>
         <Map />
       </section>
@@ -27,13 +27,13 @@
 
 <script>
 import Header from "../components/Header";
-import LeftSideBar from "../components/LeftSideBar.vue";
+import Cards from "../components/Cards.vue";
 import Map from "../components/Map.vue";
 
 export default {
   components: {
     Header,
-    LeftSideBar,
+    Cards,
     Map,
   },
 };

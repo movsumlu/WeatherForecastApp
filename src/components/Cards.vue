@@ -41,7 +41,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "LeftSideBar",
+  name: "Cards",
   async created() {
     await this.fetchCities();
   },
