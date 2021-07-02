@@ -1,6 +1,6 @@
 <template>
   <section class="weather-content__result">
-    <div class="weather-content__small-cards">
+    <div v-if="!showLoader" class="weather-content__small-cards">
       <div v-for="(city, index) in cities" :key="index">
         <div class="small-card">
           <span class="small-card__city"> {{ city.city }} </span>
@@ -9,6 +9,7 @@
         </div>
       </div>
     </div>
+    <Spinner v-else />
     <div class="weather-content__big-cards">
       <div class="weather-content__help">
         Перетащите сюда города, погода в которых вам интересна
@@ -38,15 +39,19 @@
 </template>
 
 <script>
+import Spinner from "./Spinner.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Cards",
+  components: {
+    Spinner,
+  },
   async created() {
     await this.fetchCities();
   },
   computed: {
-    ...mapGetters(["cities"]),
+    ...mapGetters(["cities", "showLoader"]),
   },
   methods: {
     ...mapActions(["fetchCities"]),

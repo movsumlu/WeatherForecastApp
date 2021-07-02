@@ -49,9 +49,12 @@
           :key="condition.value"
           class="sort-form__input-wrapper input-wrapper input-wrapper--checkbox"
         >
-          <input type="checkbox" :value="condition.value" />
+          <input type="checkbox" />
           <label>
-            <span :class="['icon', condition['icon']]"></span>
+            <span
+              @click="updateFilters(condition.value)"
+              :class="['icon', condition['icon']]"
+            />
           </label>
         </div>
       </div>
@@ -121,6 +124,9 @@ export default {
     },
     sortAlphaReverse() {
       this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
+    },
+    updateFilters(value) {
+      console.log(value);
     },
   },
 };
