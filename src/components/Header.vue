@@ -12,8 +12,8 @@
             value="alphabet-sort"
             checked
           />
-          <label for="alphabet-sort" aria-label="Сортировка по алфавиту">
-            <span class="icon icon--arrow-down"></span>
+          <label for="alphabet-sort">
+            <span class="icon icon--arrow-down" @click="sortAlpha"></span>
           </label>
         </div>
         <div
@@ -25,11 +25,8 @@
             name="alphabet-sort"
             value="alphabet-sort-reverse"
           />
-          <label
-            for="alphabet-sort-reverse"
-            aria-label="Сортировка по алфавиту в обратном направлении"
-          >
-            <span class="icon icon--arrow-up"></span>
+          <label for="alphabet-sort-reverse">
+            <span class="icon icon--arrow-up" @click="sortAlphaReverse"></span>
           </label>
         </div>
       </div>
@@ -38,6 +35,7 @@
           class="sort-form__input-wrapper input-wrapper input-wrapper--search"
         >
           <input
+            v-model="seachCityName"
             id="search"
             type="search"
             name="city-search"
@@ -144,8 +142,39 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapGetters } from "vuex";
+
 export default {
   name: "Header",
+  data() {
+    return {
+      seachCityName: "",
+    };
+  },
+  watch: {
+    seachCityName: function () {
+      this.seachCityName
+        ? this.setCities(
+            this.cities.filter((city) => city.city.includes(this.seachCityName))
+          )
+        : this.fetchCities();
+    },
+  },
+  computed: {
+    ...mapGetters(["cities"]),
+  },
+  methods: {
+    ...mapActions(["fetchCities"]),
+    ...mapMutations({
+      setCities: "SET_CITIES",
+    }),
+    sortAlpha() {
+      this.setCities(this.cities.sort((a, b) => a.city.localeCompare(b.city)));
+    },
+    sortAlphaReverse() {
+      this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
+    },
+  },
 };
 </script>
 

@@ -46,14 +46,10 @@ export default {
     await this.fetchCities();
   },
   computed: {
-    ...mapGetters({
-      cities: "cities",
-    }),
+    ...mapGetters(["cities"]),
   },
   methods: {
-    ...mapActions({
-      fetchCities: "fetchCities",
-    }),
+    ...mapActions(["fetchCities"]),
   },
 };
 </script>
