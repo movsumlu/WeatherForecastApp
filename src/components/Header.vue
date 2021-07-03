@@ -49,8 +49,8 @@
           :key="condition.value"
           class="sort-form__input-wrapper input-wrapper input-wrapper--checkbox"
         >
-          <input type="checkbox" />
-          <label>
+          <input type="checkbox" :id="condition.value" />
+          <label :for="condition.value">
             <span
               @click="updateFilters(condition.value)"
               :class="['icon', condition['icon']]"
@@ -74,30 +74,37 @@ export default {
         {
           value: "rainy",
           icon: "icon--rainy",
+          checked: false,
         },
         {
           value: "sunny",
           icon: "icon--sunny",
+          checked: false,
         },
         {
           value: "cloudy",
           icon: "icon--cloudy",
+          checked: false,
         },
         {
           value: "snowy",
           icon: "icon--snowy",
+          checked: false,
         },
         {
           value: "stormy",
           icon: "icon--stormy",
+          checked: false,
         },
         {
           value: "blizzard",
           icon: "icon--blizzard",
+          checked: false,
         },
         {
           value: "metorite",
           icon: "icon--metorite",
+          checked: false,
         },
       ],
     };
@@ -126,6 +133,10 @@ export default {
       this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
     },
     updateFilters(value) {
+      // let findItem = this.weatherConditions.find(
+      //   (condition) => condition.value === value
+      // );
+      // findItem.checked = true;
       console.log(value);
     },
   },

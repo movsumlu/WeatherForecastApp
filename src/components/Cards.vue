@@ -2,36 +2,54 @@
   <section class="weather-content__result">
     <div v-if="!showLoader" class="weather-content__small-cards">
       <div v-for="(city, index) in cities" :key="index">
-        <div class="small-card">
+        <div
+          class="small-card"
+          @dragstart="onDragStart($event, city)"
+          draggable="true"
+        >
           <span class="small-card__city"> {{ city.city }} </span>
-          <span class="small-card__temperature">+{{ city.temperature }}°</span>
+          <span class="small-card__temperature"
+            >{{ correctValueOfTemp(city.temperature) }}°C</span
+          >
           <span class="icon icon--strips-small"></span>
         </div>
       </div>
     </div>
     <Spinner v-else />
-    <div class="weather-content__big-cards">
+    <div
+      class="weather-content__big-cards"
+      @drop="onDrop($event)"
+      @dragenter.prevent
+      @dragover.prevent
+    >
       <div class="weather-content__help">
         Перетащите сюда города, погода в которых вам интересна
       </div>
-      <div class="big-card">
-        <div class="big-card__header">
-          <span class="icon icon--strips-big"></span>
-          <span class="big-card__city">Великий Новгород</span>
-        </div>
-        <div class="big-card__content">
-          <div class="big-card__content-wrapper">
-            <div class="big-card__weather-conditions">
-              <span class="icon icon--rainy"></span>
-              <span class="icon icon--meteor-shower"></span>
-              <span class="icon icon--tornado"></span>
-            </div>
-            <div class="big-card__wind">
-              <span class="icon icon--wind"></span>
-              <span class="big-card__wind-info">Ветер ЮВ, 0-1 м/с</span>
-            </div>
+      <div v-for="card in bigCardsList" :key="card.city">
+        <div class="big-card">
+          <div class="big-card__header">
+            <span class="icon icon--strips-big"></span>
+            <span class="big-card__city">{{ card.city }}</span>
           </div>
-          <span class="big-card__temperature">+12°</span>
+          <div class="big-card__content">
+            <div class="big-card__content-wrapper">
+              <div class="big-card__weather-conditions">
+                <span class="icon icon--rainy"></span>
+                <span class="icon icon--meteor-shower"></span>
+                <span class="icon icon--tornado"></span>
+              </div>
+              <div class="big-card__wind">
+                <span class="icon icon--wind"></span>
+                <span class="big-card__wind-info"
+                  >{{ windDirection(card.wind.direction) }}
+                  {{ windSpeed(card.wind.speed) }}</span
+                >
+              </div>
+            </div>
+            <span class="big-card__temperature"
+              >{{ correctValueOfTemp(card.temperature) }}°C</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -47,6 +65,11 @@ export default {
   components: {
     Spinner,
   },
+  data() {
+    return {
+      bigCardsList: [],
+    };
+  },
   async created() {
     await this.fetchCities();
   },
@@ -55,6 +78,29 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCities"]),
+    onDragStart(event, item) {
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("droppedItem", JSON.stringify(item));
+    },
+    onDrop(event) {
+      const droppedItem = JSON.parse(event.dataTransfer.getData("droppedItem"));
+      if (!this.cityExists(this.bigCardsList, droppedItem.city)) {
+        this.bigCardsList.push(droppedItem);
+      }
+    },
+    correctValueOfTemp(temperature) {
+      return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
+    },
+    windDirection(direction) {
+      return direction ? direction + "," : "";
+    },
+    windSpeed(speed) {
+      return speed ? speed + " м/с" : "";
+    },
+    cityExists(array, nameOfCity) {
+      return array.some((item) => item.city === nameOfCity);
+    },
   },
 };
 </script>
@@ -137,6 +183,10 @@ export default {
   cursor: pointer;
   transition: background-color var(--transition-base),
     filter var(--transition-base);
+
+  span {
+    user-select: none;
+  }
 
   &:hover {
     background-color: var(--color-blue-light);
