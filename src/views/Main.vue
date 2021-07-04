@@ -6,8 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="Прогноз погоды" />
       <link
-        rel="preload"
         as="font"
+        rel="stylesheet preload prefetch"
         href="../assets/fonts/Roboto/Roboto-Regular.woff2"
         type="font/woff2"
         crossorigin="anonymous"

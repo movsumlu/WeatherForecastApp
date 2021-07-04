@@ -34,9 +34,25 @@
           <div class="big-card__content">
             <div class="big-card__content-wrapper">
               <div class="big-card__weather-conditions">
-                <span class="icon icon--rainy"></span>
-                <span class="icon icon--meteor-shower"></span>
-                <span class="icon icon--tornado"></span>
+                <span v-if="card.weather.rainy" class="icon icon--rainy"></span>
+                <span v-if="card.weather.sunny" class="icon icon--sunny"></span>
+                <span
+                  v-if="card.weather.cloudy"
+                  class="icon icon--cloudy"
+                ></span>
+                <span v-if="card.weather.snowy" class="icon icon--snowy"></span>
+                <span
+                  v-if="card.weather.stormy"
+                  class="icon icon--stormy"
+                ></span>
+                <span
+                  v-if="card.weather.blizzard"
+                  class="icon icon--blizzard"
+                ></span>
+                <span
+                  v-if="card.weather.metorite"
+                  class="icon icon--metorite"
+                ></span>
               </div>
               <div class="big-card__wind">
                 <span class="icon icon--wind"></span>
@@ -58,7 +74,7 @@
 
 <script>
 import Spinner from "./Spinner.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "Cards",
@@ -77,6 +93,10 @@ export default {
     ...mapGetters(["cities", "showLoader"]),
   },
   methods: {
+    ...mapMutations({
+      setCities: "SET_CITIES",
+      setFullListOfCities: "SET_FULL_LIST_OF_CITIES",
+    }),
     ...mapActions(["fetchCities"]),
     onDragStart(event, item) {
       event.dataTransfer.dropEffect = "move";
@@ -85,9 +105,16 @@ export default {
     },
     onDrop(event) {
       const droppedItem = JSON.parse(event.dataTransfer.getData("droppedItem"));
-      if (!this.cityExists(this.bigCardsList, droppedItem.city)) {
-        this.bigCardsList.push(droppedItem);
-      }
+      this.bigCardsList.push(droppedItem);
+
+      const filteredArray = [];
+      this.cities.forEach((city) => {
+        if (city.city !== droppedItem.city) {
+          filteredArray.push(city);
+        }
+      });
+      this.setCities(filteredArray);
+      this.setFullListOfCities(filteredArray);
     },
     correctValueOfTemp(temperature) {
       return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
@@ -97,9 +124,6 @@ export default {
     },
     windSpeed(speed) {
       return speed ? speed + " м/с" : "";
-    },
-    cityExists(array, nameOfCity) {
-      return array.some((item) => item.city === nameOfCity);
     },
   },
 };
@@ -216,13 +240,6 @@ export default {
   }
 }
 
-.small-card--shadow .small-card__city,
-.small-card--shadow .small-card__temperature,
-.small-card:hover .small-card__city,
-.small-card:hover .small-card__temperature {
-  color: var(--color-text-white);
-}
-
 .big-card {
   display: flex;
   flex-direction: column;
@@ -293,6 +310,70 @@ export default {
   &:active {
     filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
   }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    &--strips-big {
+      width: 6px;
+      height: 22px;
+      background-image: url("../assets/img/icons/icon-strips-big.svg");
+    }
+
+    &--strips-small {
+      width: 6px;
+      height: 16px;
+      background-image: url("../assets/img/icons/icon-strips-small.svg");
+    }
+
+    &--arrow-down {
+      background-image: url("../assets/img/icons/icon-arrow-down.svg");
+    }
+
+    &--arrow-up {
+      background-image: url("../assets/img/icons/icon-arrow-up.svg");
+    }
+
+    &--rainy {
+      background-image: url("../assets/img/icons/icon-rainy.svg");
+    }
+
+    &--sunny {
+      background-image: url("../assets/img/icons/icon-sunny.svg");
+    }
+
+    &--cloudy {
+      background-image: url("../assets/img/icons/icon-cloudy.svg");
+    }
+
+    &--snowy {
+      background-image: url("../assets/img/icons/icon-snowy.svg");
+    }
+
+    &--stormy {
+      background-image: url("../assets/img/icons/icon-stormy.svg");
+    }
+
+    &--blizzard {
+      background-image: url("../assets/img/icons/icon-blizzard.svg");
+    }
+
+    &--metorite {
+      background-image: url("../assets/img/icons/icon-metorite.svg");
+    }
+
+    &--wind {
+      background-image: url("../assets/img/icons/icon-wind.svg");
+    }
+  }
 }
 
 .big-card .big-card__content {
@@ -306,15 +387,6 @@ export default {
 
 .big-card__weather-conditions span:last-child {
   margin-right: 0;
-}
-
-.big-card:hover .big-card__city {
-  color: var(--color-text-white);
-}
-
-.big-card:hover .big-card__temperature,
-.big-card:hover .big-card__wind-info {
-  color: var(--color-text-white);
 }
 
 .big-card:hover .big-card__header {
@@ -333,9 +405,16 @@ export default {
   background-color: var(--color-blue-deep);
 }
 
+.small-card--shadow .small-card__city,
+.small-card--shadow .small-card__temperature,
+.small-card:hover .small-card__city,
+.small-card:hover .small-card__temperature,
 .big-card--shadow .big-card__city,
 .big-card--shadow .big-card__temperature,
-.big-card--shadow .big-card__wind-info {
+.big-card--shadow .big-card__wind-info,
+.big-card:hover .big-card__city,
+.big-card:hover .big-card__temperature,
+.big-card:hover .big-card__wind-info {
   color: var(--color-text-white);
 }
 </style>

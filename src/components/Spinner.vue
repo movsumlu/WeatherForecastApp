@@ -4,6 +4,7 @@
       <circle class="loader-svg bg" cx="50" cy="50" r="45"></circle>
       <circle class="loader-svg animate" cx="50" cy="50" r="45"></circle>
     </svg>
+    <p class="svg-loader--text">Загрузка ...</p>
   </div>
 </template>
 
@@ -16,6 +17,10 @@ export default {
 <style lang="scss" scoped>
 .svg-loader {
   margin: 70px 0 0 140px;
+
+  &--text {
+    margin-left: 20px;
+  }
 }
 .loader-svg {
   fill: none;

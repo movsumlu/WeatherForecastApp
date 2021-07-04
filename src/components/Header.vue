@@ -111,15 +111,15 @@ export default {
   },
   watch: {
     seachCityName: function () {
-      this.seachCityName
-        ? this.setCities(
-            this.cities.filter((city) => city.city.includes(this.seachCityName))
-          )
-        : this.fetchCities();
+      this.setCities(
+        this.fullListofCities.filter((city) =>
+          city.city.includes(this.seachCityName)
+        )
+      );
     },
   },
   computed: {
-    ...mapGetters(["cities"]),
+    ...mapGetters(["cities", "fullListofCities"]),
   },
   methods: {
     ...mapActions(["fetchCities"]),
@@ -133,10 +133,6 @@ export default {
       this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
     },
     updateFilters(value) {
-      // let findItem = this.weatherConditions.find(
-      //   (condition) => condition.value === value
-      // );
-      // findItem.checked = true;
       console.log(value);
     },
   },
