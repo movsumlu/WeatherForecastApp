@@ -1,64 +1,54 @@
 <template>
-  <section class="sort-form weather-content__sort">
-    <form action="#" method="GET">
-      <div class="sort-form__group">
-        <div
-          class="sort-form__input-wrapper input-wrapper input-wrapper--radio"
-        >
-          <input
-            id="alphabet-sort"
-            type="radio"
-            name="alphabet-sort"
-            value="alphabet-sort"
-            checked
-          />
-          <label for="alphabet-sort">
-            <span class="icon icon--arrow-down" @click="sortAlpha"></span>
-          </label>
-        </div>
-        <div
-          class="sort-form__input-wrapper input-wrapper input-wrapper--radio"
-        >
-          <input
-            id="alphabet-sort-reverse"
-            type="radio"
-            name="alphabet-sort"
-            value="alphabet-sort-reverse"
-          />
-          <label for="alphabet-sort-reverse">
-            <span class="icon icon--arrow-up" @click="sortAlphaReverse"></span>
-          </label>
-        </div>
+  <section class="sort-form">
+    <div class="sort-form__group">
+      <div class="sort-form__input-wrapper input-wrapper input-wrapper--radio">
+        <input
+          id="alphabet-sort"
+          type="radio"
+          name="alphabet-sort"
+          value="alphabet-sort"
+          checked
+        />
+        <label for="alphabet-sort">
+          <span class="icon icon--arrow-down" @click="sortAlpha"></span>
+        </label>
       </div>
-      <div class="sort-form__group">
-        <div
-          class="sort-form__input-wrapper input-wrapper input-wrapper--search"
-        >
-          <input
-            v-model="seachCityName"
-            id="search"
-            type="search"
-            name="city-search"
-            placeholder="Название города"
+      <div class="sort-form__input-wrapper input-wrapper input-wrapper--radio">
+        <input
+          id="alphabet-sort-reverse"
+          type="radio"
+          name="alphabet-sort"
+          value="alphabet-sort-reverse"
+        />
+        <label for="alphabet-sort-reverse">
+          <span class="icon icon--arrow-up" @click="sortAlphaReverse"></span>
+        </label>
+      </div>
+    </div>
+    <div class="sort-form__group">
+      <div class="sort-form__input-wrapper input-wrapper input-wrapper--search">
+        <input
+          v-model="seachCityName"
+          type="search"
+          placeholder="Название города"
+        />
+      </div>
+    </div>
+    <div class="sort-form__group">
+      <div
+        v-for="condition in weatherConditions"
+        :key="condition.value"
+        class="sort-form__input-wrapper input-wrapper input-wrapper--checkbox"
+      >
+        <input type="checkbox" :id="condition.value" />
+        <label :for="condition.value">
+          <span
+            @click="updateFilters(condition.value)"
+            :class="['icon', condition['icon']]"
           />
-        </div>
+        </label>
       </div>
-      <div class="sort-form__group">
-        <div
-          v-for="condition in weatherConditions"
-          :key="condition.value"
-          class="sort-form__input-wrapper input-wrapper input-wrapper--checkbox"
-        >
-          <input type="checkbox" :id="condition.value" />
-          <label :for="condition.value">
-            <span
-              @click="updateFilters(condition.value)"
-              :class="['icon', condition['icon']]"
-            />
-          </label>
-        </div>
-      </div>
-    </form>
+    </div>
   </section>
 </template>
 
@@ -142,13 +132,9 @@ export default {
 <style lang="scss" scoped>
 .sort-form {
   display: flex;
-
-  form {
-    display: flex;
-    min-width: 712px;
-    padding: 12px 20px;
-    background-color: var(--color-blue-main);
-  }
+  min-width: 712px;
+  padding: 12px 20px;
+  background-color: var(--color-blue-main);
 
   &__group {
     display: flex;
@@ -158,16 +144,16 @@ export default {
     margin-right: 20px;
     margin-bottom: -2px;
   }
-}
 
-.sort-form__group > div {
-  margin-right: 2px;
-  margin-bottom: 2px;
-}
+  &__group > div {
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
 
-.sort-form__group:last-child,
-.sort-form__group > div:last-child {
-  margin-right: 0;
+  &__group:last-child,
+  &__group > div:last-child {
+    margin-right: 0;
+  }
 }
 
 .icon {

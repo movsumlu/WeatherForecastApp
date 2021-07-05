@@ -10,7 +10,7 @@
       <div v-for="city in cities" :key="city.city">
         <div
           class="small-card"
-          @dragstart="onDragStart($event, city)"
+          @dragstart="onDragStart($event, city, 'toBigCards')"
           draggable="true"
         >
           <span class="small-card__city"> {{ city.city }} </span>
@@ -20,6 +20,7 @@
           <span class="icon icon--strips-small"></span>
         </div>
       </div>
+      <div v-if="showSmallEmptyCard" class="small-card small-card--empty"></div>
     </div>
     <Spinner v-else />
     <div
@@ -34,7 +35,7 @@
       <div v-for="city in bigCardsList" :key="city.city">
         <div
           class="big-card"
-          @dragstart="onDragStart($event, city)"
+          @dragstart="onDragStart($event, city, 'toSmallCards')"
           draggable="true"
         >
           <div class="big-card__header">
@@ -78,6 +79,7 @@
           </div>
         </div>
       </div>
+      <div v-if="showBigEmptyCard" class="big-card big-card--empty"></div>
     </div>
   </section>
 </template>
@@ -94,6 +96,8 @@ export default {
   data() {
     return {
       bigCardsList: [],
+      showSmallEmptyCard: false,
+      showBigEmptyCard: false,
     };
   },
   async created() {
@@ -108,14 +112,18 @@ export default {
       setFullListOfCities: "SET_FULL_LIST_OF_CITIES",
     }),
     ...mapActions(["fetchCities"]),
-    onDragStart(event, city) {
+    onDragStart(event, city, type) {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("droppedCity", JSON.stringify(city));
+      type === "toBigCards"
+        ? (this.showBigEmptyCard = true)
+        : (this.showSmallEmptyCard = true);
     },
     onDrop(event, type) {
       const droppedCity = JSON.parse(event.dataTransfer.getData("droppedCity"));
       const filteredArray = [];
+      this.showBigEmptyCard = this.showSmallEmptyCard = false;
 
       if (type === "toBigCards") {
         this.bigCardsList.push(droppedCity);
@@ -220,7 +228,6 @@ export default {
   background-color: var(--color-light-grey);
   border-radius: 2px;
   outline: none;
-  cursor: pointer;
   transition: background-color var(--transition-base),
     filter var(--transition-base);
 
@@ -247,12 +254,20 @@ export default {
   }
 
   &:active {
+    cursor: grabbing;
     filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
   }
 
   &--shadow {
     pointer-events: none;
     background-color: var(--color-shadow-main);
+  }
+
+  &--empty {
+    pointer-events: none;
+    min-height: 56px;
+    background-color: rgba(247, 248, 255, 0.3);
+    border: 2px dashed var(--color-border);
   }
 }
 
@@ -264,7 +279,6 @@ export default {
   min-height: 172px;
   border-radius: 2px;
   outline: none;
-  cursor: pointer;
   transition: filter var(--transition-base);
 
   &__header {
@@ -324,6 +338,7 @@ export default {
   }
 
   &:active {
+    cursor: grabbing;
     filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
   }
 
@@ -389,6 +404,13 @@ export default {
     &--wind {
       background-image: url("../assets/img/icons/icon-wind.svg");
     }
+  }
+
+  &--empty {
+    pointer-events: none;
+    min-height: 172px;
+    background-color: rgba(247, 248, 255, 0.3);
+    border: 2px dashed var(--color-border);
   }
 }
 
