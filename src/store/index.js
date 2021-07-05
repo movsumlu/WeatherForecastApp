@@ -29,8 +29,11 @@ export default createStore({
         await axios
           .get("https://geo-weather-json.herokuapp.com/db")
           .then((response) => {
-            commit("SET_CITIES", response.data.cities);
-            commit("SET_FULL_LIST_OF_CITIES", response.data.cities);
+            const sortedCities = response.data.cities.sort((a, b) =>
+              a.city.localeCompare(b.city)
+            );
+            commit("SET_CITIES", sortedCities);
+            commit("SET_FULL_LIST_OF_CITIES", sortedCities);
             commit("SET_LOADER", false);
           });
       } catch (error) {

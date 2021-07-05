@@ -1,7 +1,13 @@
 <template>
   <section class="weather-content__result">
-    <div v-if="!showLoader" class="weather-content__small-cards">
-      <div v-for="(city, index) in cities" :key="index">
+    <div
+      v-if="!showLoader"
+      class="weather-content__small-cards"
+      @drop="onDrop($event, 'toSmallCards')"
+      @dragenter.prevent
+      @dragover.prevent
+    >
+      <div v-for="city in cities" :key="city.city">
         <div
           class="small-card"
           @dragstart="onDragStart($event, city)"
@@ -18,52 +24,56 @@
     <Spinner v-else />
     <div
       class="weather-content__big-cards"
-      @drop="onDrop($event)"
+      @drop="onDrop($event, 'toBigCards')"
       @dragenter.prevent
       @dragover.prevent
     >
       <div class="weather-content__help">
         Перетащите сюда города, погода в которых вам интересна
       </div>
-      <div v-for="card in bigCardsList" :key="card.city">
-        <div class="big-card">
+      <div v-for="city in bigCardsList" :key="city.city">
+        <div
+          class="big-card"
+          @dragstart="onDragStart($event, city)"
+          draggable="true"
+        >
           <div class="big-card__header">
             <span class="icon icon--strips-big"></span>
-            <span class="big-card__city">{{ card.city }}</span>
+            <span class="big-card__city">{{ city.city }}</span>
           </div>
           <div class="big-card__content">
             <div class="big-card__content-wrapper">
               <div class="big-card__weather-conditions">
-                <span v-if="card.weather.rainy" class="icon icon--rainy"></span>
-                <span v-if="card.weather.sunny" class="icon icon--sunny"></span>
+                <span v-if="city.weather.rainy" class="icon icon--rainy"></span>
+                <span v-if="city.weather.sunny" class="icon icon--sunny"></span>
                 <span
-                  v-if="card.weather.cloudy"
+                  v-if="city.weather.cloudy"
                   class="icon icon--cloudy"
                 ></span>
-                <span v-if="card.weather.snowy" class="icon icon--snowy"></span>
+                <span v-if="city.weather.snowy" class="icon icon--snowy"></span>
                 <span
-                  v-if="card.weather.stormy"
+                  v-if="city.weather.stormy"
                   class="icon icon--stormy"
                 ></span>
                 <span
-                  v-if="card.weather.blizzard"
+                  v-if="city.weather.blizzard"
                   class="icon icon--blizzard"
                 ></span>
                 <span
-                  v-if="card.weather.metorite"
+                  v-if="city.weather.metorite"
                   class="icon icon--metorite"
                 ></span>
               </div>
               <div class="big-card__wind">
                 <span class="icon icon--wind"></span>
                 <span class="big-card__wind-info"
-                  >{{ windDirection(card.wind.direction) }}
-                  {{ windSpeed(card.wind.speed) }}</span
+                  >{{ windDirection(city.wind.direction) }}
+                  {{ windSpeed(city.wind.speed) }}</span
                 >
               </div>
             </div>
             <span class="big-card__temperature"
-              >{{ correctValueOfTemp(card.temperature) }}°C</span
+              >{{ correctValueOfTemp(city.temperature) }}°C</span
             >
           </div>
         </div>
@@ -98,23 +108,29 @@ export default {
       setFullListOfCities: "SET_FULL_LIST_OF_CITIES",
     }),
     ...mapActions(["fetchCities"]),
-    onDragStart(event, item) {
+    onDragStart(event, city) {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("droppedItem", JSON.stringify(item));
+      event.dataTransfer.setData("droppedCity", JSON.stringify(city));
     },
-    onDrop(event) {
-      const droppedItem = JSON.parse(event.dataTransfer.getData("droppedItem"));
-      this.bigCardsList.push(droppedItem);
-
+    onDrop(event, type) {
+      const droppedCity = JSON.parse(event.dataTransfer.getData("droppedCity"));
       const filteredArray = [];
-      this.cities.forEach((city) => {
-        if (city.city !== droppedItem.city) {
-          filteredArray.push(city);
-        }
-      });
-      this.setCities(filteredArray);
-      this.setFullListOfCities(filteredArray);
+
+      if (type === "toBigCards") {
+        this.bigCardsList.push(droppedCity);
+        this.cities.forEach((city) => {
+          if (city.city !== droppedCity.city) filteredArray.push(city);
+        });
+        this.setCities(filteredArray);
+        this.setFullListOfCities(filteredArray);
+      } else {
+        this.bigCardsList.forEach((city) => {
+          if (city.city !== droppedCity.city) filteredArray.push(city);
+        });
+        this.bigCardsList = filteredArray;
+        this.setCities([droppedCity, ...this.cities]);
+      }
     },
     correctValueOfTemp(temperature) {
       return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
