@@ -138,6 +138,7 @@ export default {
         });
         this.bigCardsList = filteredArray;
         this.setCities([droppedCity, ...this.cities]);
+        this.setFullListOfCities([droppedCity, ...this.cities]);
       }
     },
     correctValueOfTemp(temperature) {

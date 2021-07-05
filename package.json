@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "run jest": "vue-cli-service test:unit",
+    "run tests": "vue-cli-service test:unit",
     "run linter": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {

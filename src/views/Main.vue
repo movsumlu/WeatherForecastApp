@@ -3,19 +3,10 @@
     <head>
       <title>Прогноз погоды</title>
       <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content="Прогноз погоды" />
-      <link
-        as="font"
-        rel="stylesheet preload prefetch"
-        href="../assets/fonts/Roboto/Roboto-Regular.woff2"
-        type="font/woff2"
-        crossorigin="anonymous"
-      />
     </head>
     <body>
       <section class="weather-app">
-        <div class="weather-app__content weather-content">
+        <div class="weather-app__content">
           <Header />
           <Cards />
         </div>
