@@ -104,7 +104,7 @@ export default {
     await this.fetchCities();
   },
   computed: {
-    ...mapGetters(["cities", "showLoader"]),
+    ...mapGetters(["cities", "showLoader", "sortingDirection"]),
   },
   methods: {
     ...mapMutations({
@@ -122,23 +122,45 @@ export default {
     },
     onDrop(event, type) {
       const droppedCity = JSON.parse(event.dataTransfer.getData("droppedCity"));
-      const filteredArray = [];
       this.showBigEmptyCard = this.showSmallEmptyCard = false;
+      let filteredArray = [];
 
       if (type === "toBigCards") {
         this.bigCardsList.push(droppedCity);
-        this.cities.forEach((city) => {
-          if (city.city !== droppedCity.city) filteredArray.push(city);
+
+        filteredArray = this.cities.filter(function (city) {
+          return city.city !== droppedCity.city;
         });
-        this.setCities(filteredArray);
-        this.setFullListOfCities(filteredArray);
+
+        if (this.sortingDirection === "alphabetically") {
+          this.setCities(
+            filteredArray.sort((a, b) => a.city.localeCompare(b.city))
+          );
+          this.setFullListOfCities(filteredArray);
+        } else {
+          this.setCities(
+            filteredArray.sort((a, b) => b.city.localeCompare(a.city))
+          );
+          this.setFullListOfCities(filteredArray);
+        }
       } else {
-        this.bigCardsList.forEach((city) => {
-          if (city.city !== droppedCity.city) filteredArray.push(city);
+        this.bigCardsList = this.bigCardsList.filter(function (city) {
+          return city.city !== droppedCity.city;
         });
-        this.bigCardsList = filteredArray;
-        this.setCities([droppedCity, ...this.cities]);
-        this.setFullListOfCities([droppedCity, ...this.cities]);
+
+        if (this.sortingDirection === "alphabetically") {
+          this.setCities(
+            [...this.cities, droppedCity].sort((a, b) =>
+              a.city.localeCompare(b.city)
+            )
+          );
+        } else {
+          this.setCities(
+            [...this.cities, droppedCity].sort((a, b) =>
+              b.city.localeCompare(a.city)
+            )
+          );
+        }
       }
     },
     correctValueOfTemp(temperature) {

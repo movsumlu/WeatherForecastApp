@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Header",
@@ -103,7 +103,7 @@ export default {
     seachCityName: function () {
       this.setCities(
         this.fullListofCities.filter((city) =>
-          city.city.includes(this.seachCityName)
+          city.city.toLowerCase().includes(this.seachCityName.toLowerCase())
         )
       );
     },
@@ -112,14 +112,16 @@ export default {
     ...mapGetters(["cities", "fullListofCities"]),
   },
   methods: {
-    ...mapActions(["fetchCities"]),
     ...mapMutations({
       setCities: "SET_CITIES",
+      setSortingDirection: "SET_SORT_DIRECTION",
     }),
     sortAlpha() {
+      this.setSortingDirection("alphabetically");
       this.setCities(this.cities.sort((a, b) => a.city.localeCompare(b.city)));
     },
     sortAlphaReverse() {
+      this.setSortingDirection("alphabeticallyReverse");
       this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
     },
     updateFilters(value) {

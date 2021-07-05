@@ -6,11 +6,13 @@ export default createStore({
     cities: [],
     fullListofCities: [],
     showLoader: true,
+    sortingDirection: "alphabetically",
   },
   getters: {
     cities: (state) => state.cities,
     fullListofCities: (state) => state.fullListofCities,
     showLoader: (state) => state.showLoader,
+    sortingDirection: (state) => state.sortingDirection,
   },
   mutations: {
     SET_CITIES(state, data = []) {
@@ -21,6 +23,9 @@ export default createStore({
     },
     SET_LOADER(state, data) {
       state.showLoader = data;
+    },
+    SET_SORT_DIRECTION(state, data) {
+      state.sortingDirection = data;
     },
   },
   actions: {
