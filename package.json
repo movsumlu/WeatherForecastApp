@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "run tests": "vue-cli-service test:unit",
-    "run linter": "eslint --ext .js,.vue src --fix"
+    "run lint": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
     "axios": "^0.21.1",
