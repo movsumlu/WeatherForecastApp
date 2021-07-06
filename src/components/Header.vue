@@ -44,7 +44,7 @@
         <label :for="condition.value">
           <span
             @click="updateFilters(condition.value)"
-            :class="['icon', condition['icon']]"
+            :class="['icon', `icon--${condition['value']}`]"
           />
         </label>
       </div>
@@ -65,37 +65,30 @@ export default {
       weatherConditions: [
         {
           value: "rainy",
-          icon: "icon--rainy",
           checked: false,
         },
         {
           value: "sunny",
-          icon: "icon--sunny",
           checked: false,
         },
         {
           value: "cloudy",
-          icon: "icon--cloudy",
           checked: false,
         },
         {
           value: "snowy",
-          icon: "icon--snowy",
           checked: false,
         },
         {
           value: "stormy",
-          icon: "icon--stormy",
           checked: false,
         },
         {
           value: "blizzard",
-          icon: "icon--blizzard",
           checked: false,
         },
         {
           value: "metorite",
-          icon: "icon--metorite",
           checked: false,
         },
       ],
