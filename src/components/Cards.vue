@@ -118,8 +118,6 @@ export default {
     }),
     ...mapActions(["fetchCities"]),
     onDragStart(event, city, type) {
-      event.dataTransfer.dropEffect = "move";
-      event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("droppedCity", JSON.stringify(city));
       type === "toBigCards"
         ? (this.showBigEmptyCard = true)
@@ -137,25 +135,21 @@ export default {
           (city) => city.city !== droppedCity.city
         );
 
-        if (this.alphaSortDirection) {
-          this.setCities(this.alphaCitySort(filteredArray));
-          this.setFullListOfCities(filteredArray);
-        } else {
-          this.setCities(this.alphaReverseCitySort(filteredArray));
-          this.setFullListOfCities(filteredArray);
-        }
+        this.alphaSortDirection
+          ? this.setCities(this.alphaCitySort(filteredArray))
+          : this.setCities(this.alphaReverseCitySort(filteredArray));
+        this.setFullListOfCities(filteredArray);
       } else {
         this.bigCardsList = this.bigCardsList.filter(
           (city) => city.city !== droppedCity.city
         );
 
-        if (this.alphaSortDirection) {
-          this.setCities(this.alphaCitySort([...this.cities, droppedCity]));
-        } else {
-          this.setCities(
-            this.alphaReverseCitySort([...this.cities, droppedCity])
-          );
-        }
+        this.alphaSortDirection
+          ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
+          : this.setCities(
+              this.alphaReverseCitySort([...this.cities, droppedCity])
+            );
+        this.setFullListOfCities([...this.cities, droppedCity]);
       }
     },
     correctValueOfTemp(temperature) {
