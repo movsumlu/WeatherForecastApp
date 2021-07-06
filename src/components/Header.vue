@@ -53,10 +53,12 @@
 </template>
 
 <script>
+import sortMethods from "../mixins/sort-methods";
 import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Header",
+  mixins: [sortMethods],
   data() {
     return {
       seachCityName: "",
@@ -118,11 +120,11 @@ export default {
     }),
     sortAlpha() {
       this.setSortingDirection("alphabetically");
-      this.setCities(this.cities.sort((a, b) => a.city.localeCompare(b.city)));
+      this.setCities(this.alphaCitySort(this.cities));
     },
     sortAlphaReverse() {
       this.setSortingDirection("alphabeticallyReverse");
-      this.setCities(this.cities.sort((a, b) => b.city.localeCompare(a.city)));
+      this.setCities(this.alphaReverseCitySort(this.cities));
     },
     updateFilters(value) {
       console.log(value);

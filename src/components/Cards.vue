@@ -86,6 +86,7 @@
 
 <script>
 import Spinner from "./Spinner.vue";
+import sortMethods from "../mixins/sort-methods";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -93,6 +94,7 @@ export default {
   components: {
     Spinner,
   },
+  mixins: [sortMethods],
   data() {
     return {
       bigCardsList: [],
@@ -105,6 +107,9 @@ export default {
   },
   computed: {
     ...mapGetters(["cities", "showLoader", "sortingDirection"]),
+    alphaSortDirection() {
+      return this.sortingDirection === "alphabetically";
+    },
   },
   methods: {
     ...mapMutations({
@@ -128,37 +133,27 @@ export default {
       if (type === "toBigCards") {
         this.bigCardsList.push(droppedCity);
 
-        filteredArray = this.cities.filter(function (city) {
-          return city.city !== droppedCity.city;
-        });
+        filteredArray = this.cities.filter(
+          (city) => city.city !== droppedCity.city
+        );
 
-        if (this.sortingDirection === "alphabetically") {
-          this.setCities(
-            filteredArray.sort((a, b) => a.city.localeCompare(b.city))
-          );
+        if (this.alphaSortDirection) {
+          this.setCities(this.alphaCitySort(filteredArray));
           this.setFullListOfCities(filteredArray);
         } else {
-          this.setCities(
-            filteredArray.sort((a, b) => b.city.localeCompare(a.city))
-          );
+          this.setCities(this.alphaReverseCitySort(filteredArray));
           this.setFullListOfCities(filteredArray);
         }
       } else {
-        this.bigCardsList = this.bigCardsList.filter(function (city) {
-          return city.city !== droppedCity.city;
-        });
+        this.bigCardsList = this.bigCardsList.filter(
+          (city) => city.city !== droppedCity.city
+        );
 
-        if (this.sortingDirection === "alphabetically") {
-          this.setCities(
-            [...this.cities, droppedCity].sort((a, b) =>
-              a.city.localeCompare(b.city)
-            )
-          );
+        if (this.alphaSortDirection) {
+          this.setCities(this.alphaCitySort([...this.cities, droppedCity]));
         } else {
           this.setCities(
-            [...this.cities, droppedCity].sort((a, b) =>
-              b.city.localeCompare(a.city)
-            )
+            this.alphaReverseCitySort([...this.cities, droppedCity])
           );
         }
       }
