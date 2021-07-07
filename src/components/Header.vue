@@ -28,9 +28,11 @@
     <div class="sort-form__group">
       <div class="sort-form__input-wrapper input-wrapper input-wrapper--search">
         <input
-          v-model="seachCityName"
           type="search"
-          placeholder="Название города"
+          v-model="seachCityName"
+          @focus="inputFocused = true"
+          @blur="inputFocused = false"
+          :placeholder="inputFocused ? '' : 'Название города'"
         />
       </div>
     </div>
@@ -62,6 +64,7 @@ export default {
   data() {
     return {
       seachCityName: "",
+      inputFocused: false,
       weatherConditions: [
         {
           value: "rainy",
@@ -104,23 +107,26 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["cities", "fullListofCities"]),
+    ...mapGetters(["cities", "fullListofCities", "filters"]),
   },
   methods: {
     ...mapMutations({
       setCities: "SET_CITIES",
-      setSortingDirection: "SET_SORT_DIRECTION",
+      setSortDirect: "SET_SORT_DIRECTION",
+      setFilters: "SET_FILTERS",
     }),
     sortAlpha() {
-      this.setSortingDirection("alphabetically");
+      this.setSortDirect("alpha");
       this.setCities(this.alphaCitySort(this.cities));
     },
     sortAlphaReverse() {
-      this.setSortingDirection("alphabeticallyReverse");
+      this.setSortDirect("alphaReverse");
       this.setCities(this.alphaReverseCitySort(this.cities));
     },
     updateFilters(value) {
-      console.log(value);
+      this.filters.includes(value)
+        ? this.setFilters(this.filters.filter((item) => item !== value))
+        : this.setFilters(this.filters.push(value));
     },
   },
 };

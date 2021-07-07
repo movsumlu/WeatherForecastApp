@@ -68,7 +68,7 @@
               <div class="big-card__wind">
                 <span class="icon icon--wind"></span>
                 <span class="big-card__wind-info"
-                  >{{ windDirection(city.wind.direction) }}
+                  >{{ windDirect(city.wind.direct) }}
                   {{ windSpeed(city.wind.speed) }}</span
                 >
               </div>
@@ -106,9 +106,9 @@ export default {
     await this.fetchCities();
   },
   computed: {
-    ...mapGetters(["cities", "showLoader", "sortingDirection"]),
-    alphaSortDirection() {
-      return this.sortingDirection === "alphabetically";
+    ...mapGetters(["cities", "showLoader", "sortDirect", "filters"]),
+    alphaSortDirect() {
+      return this.sortDirect === "alpha";
     },
   },
   methods: {
@@ -135,7 +135,7 @@ export default {
           (city) => city.city !== droppedCity.city
         );
 
-        this.alphaSortDirection
+        this.alphaSortDirect
           ? this.setCities(this.alphaCitySort(filteredArray))
           : this.setCities(this.alphaReverseCitySort(filteredArray));
         this.setFullListOfCities(filteredArray);
@@ -144,7 +144,7 @@ export default {
           (city) => city.city !== droppedCity.city
         );
 
-        this.alphaSortDirection
+        this.alphaSortDirect
           ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
           : this.setCities(
               this.alphaReverseCitySort([...this.cities, droppedCity])
@@ -155,8 +155,8 @@ export default {
     correctValueOfTemp(temperature) {
       return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
     },
-    windDirection(direction) {
-      return direction ? direction + "," : "";
+    windDirect(direct) {
+      return direct ? direct + "," : "";
     },
     windSpeed(speed) {
       return speed ? speed + " м/с" : "";
