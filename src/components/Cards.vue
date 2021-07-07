@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import Spinner from "./Spinner.vue";
-import sortMethods from "../mixins/sort-methods";
+import Spinner from "@/components/Spinner.vue";
+import sortMethods from "@/mixins/sort-methods";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {

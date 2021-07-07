@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import Cards from "../components/Cards.vue";
-import Map from "../components/Map.vue";
+import Header from "@/components/Header";
+import Cards from "@/components/Cards.vue";
+import Map from "@/components/Map.vue";
 
 export default {
   components: {
