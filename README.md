@@ -13,6 +13,12 @@ npm run serve
 ### compiles and minifies for production
 
 ```
+npm run deploy
+```
+
+### deploy project on GitHub Pages
+
+```
 npm run build
 ```
 
