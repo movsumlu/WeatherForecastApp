@@ -1,7 +1,7 @@
 <template>
   <section class="sort-form">
     <div class="sort-form__group">
-      <div class="sort-form__input-wrapper input-wrapper input-wrapper--radio">
+      <div class="sort-form__input-wrapper input-wrapper--radio">
         <input
           id="alphabet-sort"
           type="radio"
@@ -13,7 +13,7 @@
           <span class="icon icon--arrow-down" @click="sortAlpha"></span>
         </label>
       </div>
-      <div class="sort-form__input-wrapper input-wrapper input-wrapper--radio">
+      <div class="sort-form__input-wrapper input-wrapper--radio">
         <input
           id="alphabet-sort-reverse"
           type="radio"
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="sort-form__group">
-      <div class="sort-form__input-wrapper input-wrapper input-wrapper--search">
+      <div class="sort-form__input-wrapper input-wrapper--search">
         <input
           type="search"
           v-model="seachCityName"
@@ -40,7 +40,7 @@
       <div
         v-for="condition in weatherConditions"
         :key="condition.value"
-        class="sort-form__input-wrapper input-wrapper input-wrapper--checkbox"
+        class="sort-form__input-wrapper input-wrapper--checkbox"
       >
         <input type="checkbox" :id="condition.value" />
         <label :for="condition.value">
@@ -127,117 +127,76 @@ export default {
   &__group > div:last-child {
     margin-right: 0;
   }
-}
 
-.input-wrapper {
-  display: flex;
+  .input-wrapper {
+    display: flex;
+    &--search {
+      input {
+        width: 254px;
+        padding: 8px 20px;
+        color: var(--color-text-input);
+        background-color: var(--color-input-base);
+        border: none;
+        outline: none;
+        transition: background-color var(--transition-base);
+        &hover {
+          background-color: var(--color-input-hover);
+        }
+      }
 
-  input {
-    border-radius: 2px;
-  }
+      input:focus {
+        background-color: var(--color-input-focus);
+      }
 
-  &--search {
-    input {
-      width: 254px;
-      padding: 8px 20px;
-      color: var(--color-text-input);
-      background-color: var(--color-input-base);
-      border: none;
-      outline: none;
-      transition: background-color var(--transition-base);
-      &hover {
-        background-color: var(--color-input-hover);
+      input::placeholder,
+      input::-ms-input-placeholder {
+        color: var(--color-text-placeholder);
+        transition: opacity var(--transition-base);
       }
     }
-
-    input:focus::placeholder,
-    input:focus::-ms-input-placeholder {
-      opacity: 0;
-    }
-
-    input:focus {
-      background-color: var(--color-input-focus);
-    }
-
-    input::placeholder,
-    input::-ms-input-placeholder {
-      color: var(--color-text-placeholder);
-      transition: opacity var(--transition-base);
-    }
   }
-}
 
-.input-wrapper--radio label,
-.input-wrapper--checkbox label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background-color: var(--color-label-base);
-  border-radius: 2px;
-  cursor: pointer;
-  transition: background-color var(--transition-base),
-    box-shadow var(--transition-base);
-  user-select: none;
-}
+  .input-wrapper--radio label,
+  .input-wrapper--checkbox label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-label-base);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color var(--transition-base),
+      box-shadow var(--transition-base);
+    user-select: none;
+  }
 
-.input-wrapper--radio label {
-  justify-content: space-between;
-  padding: 10px;
-}
+  .input-wrapper--radio label:hover,
+  .input-wrapper--checkbox label:hover {
+    background-color: var(--color-label-hover);
+    box-shadow: 0 4px 10px rgba(11, 23, 78, 0.5);
+  }
 
-.input-wrapper--radio label:hover,
-.input-wrapper--checkbox label:hover {
-  background-color: var(--color-label-hover);
-  box-shadow: 0 4px 10px rgba(11, 23, 78, 0.5);
-}
+  .input-wrapper--radio input,
+  .input-wrapper--checkbox input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip: rect(0 0 0 0);
+  }
 
-.input-wrapper--radio label:active,
-.input-wrapper--checkbox label:active {
-  background-color: var(--color-label-active);
-}
+  .input-wrapper--radio input:checked + label,
+  .input-wrapper--checkbox input:checked + label {
+    background-color: var(--color-label-active);
+    box-shadow: none;
+  }
 
-.input-wrapper--radio label > span,
-.input-wrapper--checkbox label > span {
-  transition: opacity var(--transition-base);
-}
-
-.input-wrapper--radio label:active > span,
-.input-wrapper--checkbox label:active > span {
-  opacity: 0.3;
-}
-
-.input-wrapper--radio input,
-.input-wrapper--checkbox input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  clip: rect(0 0 0 0);
-}
-
-.input-wrapper--radio input:focus + label,
-.input-wrapper--checkbox input:focus + label {
-  background-color: var(--color-label-hover);
-}
-
-.input-wrapper--radio input:disabled + label,
-.input-wrapper--checkbox input:disabled + label {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.input-wrapper--radio input:checked + label,
-.input-wrapper--checkbox input:checked + label {
-  background-color: var(--color-label-active);
-  box-shadow: none;
-}
-
-.input-wrapper--radio input:checked:focus + label,
-.input-wrapper--checkbox input:checked:focus + label,
-.input-wrapper--radio input:checked + label:hover,
-.input-wrapper--checkbox input:checked + label:hover {
-  background-color: var(--color-label-hover-checked);
+  .input-wrapper--radio input:checked:focus + label,
+  .input-wrapper--checkbox input:checked:focus + label,
+  .input-wrapper--radio input:checked + label:hover,
+  .input-wrapper--checkbox input:checked + label:hover {
+    background-color: var(--color-label-hover-checked);
+  }
 }
 </style>
