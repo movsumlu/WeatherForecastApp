@@ -44,25 +44,14 @@
           </div>
           <div class="big-card__content">
             <div class="big-card__content-wrapper">
-              <div class="big-card__weather-conditions">
-                <span v-if="city.weather.rainy" class="icon icon--rainy"></span>
-                <span v-if="city.weather.sunny" class="icon icon--sunny"></span>
+              <div
+                v-for="condition in weatherConditions"
+                :key="condition.value"
+                class="big-card__weather-conditions"
+              >
                 <span
-                  v-if="city.weather.cloudy"
-                  class="icon icon--cloudy"
-                ></span>
-                <span v-if="city.weather.snowy" class="icon icon--snowy"></span>
-                <span
-                  v-if="city.weather.stormy"
-                  class="icon icon--stormy"
-                ></span>
-                <span
-                  v-if="city.weather.blizzard"
-                  class="icon icon--blizzard"
-                ></span>
-                <span
-                  v-if="city.weather.metorite"
-                  class="icon icon--metorite"
+                  v-if="city.weather[condition['value']]"
+                  :class="['icon', `icon--${condition['value']}`]"
                 ></span>
               </div>
               <div class="big-card__wind">
@@ -104,6 +93,9 @@ export default {
   },
   async created() {
     await this.fetchCities();
+  },
+  mounted() {
+    console.log(this);
   },
   computed: {
     ...mapGetters(["cities", "showLoader", "sortDirect", "filters"]),
@@ -248,6 +240,7 @@ export default {
   }
 
   &:hover {
+    cursor: grab;
     background-color: var(--color-blue-light);
   }
 
@@ -338,15 +331,16 @@ export default {
   }
 
   &__weather-conditions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: -2px;
+    display: inline-block;
 
     span {
-      margin-right: 10px;
-      margin-bottom: 2px;
+      margin: 0 5px 0 5px;
     }
+  }
+
+  &:hover {
+    cursor: grab;
+    background-color: var(--color-blue-light);
   }
 
   &:active {

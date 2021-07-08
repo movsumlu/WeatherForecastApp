@@ -65,36 +65,6 @@ export default {
     return {
       seachCityName: "",
       inputFocused: false,
-      weatherConditions: [
-        {
-          value: "rainy",
-          checked: false,
-        },
-        {
-          value: "sunny",
-          checked: false,
-        },
-        {
-          value: "cloudy",
-          checked: false,
-        },
-        {
-          value: "snowy",
-          checked: false,
-        },
-        {
-          value: "stormy",
-          checked: false,
-        },
-        {
-          value: "blizzard",
-          checked: false,
-        },
-        {
-          value: "metorite",
-          checked: false,
-        },
-      ],
     };
   },
   watch: {
