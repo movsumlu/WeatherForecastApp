@@ -1,11 +1,13 @@
-npm run build
+#!/usr/bin/env sh
 
+set -e
+
+npm run build
 cd dist
 
 git init
 git add -A
-git commit -m 'deploy'
-
-git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+git commit -m 'deploying on GitHub Pages'
+git push -f git@github.com:movsumlutabriz/WeatherForecastApp.git master:gh-pages
 
 cd -
