@@ -75,7 +75,7 @@
 
 <script>
 import Spinner from "@/components/Spinner.vue";
-import sortMethods from "@/mixins/helper";
+import helper from "@/mixins/helper";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -83,7 +83,7 @@ export default {
   components: {
     Spinner,
   },
-  mixins: [sortMethods],
+  mixins: [helper],
   data() {
     return {
       bigCardsList: [],
@@ -93,9 +93,6 @@ export default {
   },
   async created() {
     await this.fetchCities();
-  },
-  mounted() {
-    console.log(this);
   },
   computed: {
     ...mapGetters(["cities", "showLoader", "sortDirect", "filters"]),
@@ -183,6 +180,12 @@ export default {
       text-align: center;
       color: var(--color-text-help);
     }
+
+    &__sort {
+      .sort-form__group:nth-child(3) {
+        width: 292px;
+      }
+    }
   }
 }
 
@@ -194,11 +197,6 @@ export default {
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-.weather-content__small-cards::-webkit-scrollbar,
-.weather-content__big-cards::-webkit-scrollbar {
-  display: none;
 }
 
 .weather-content__small-cards > div,
@@ -218,10 +216,6 @@ export default {
 .weather-content__sort .sort-form__group:nth-child(1) div:nth-child(2n),
 .weather-content__sort .sort-form__group:nth-child(3) div:nth-child(7n) {
   margin-right: 0;
-}
-
-.weather-content__sort .sort-form__group:nth-child(3) {
-  width: 292px;
 }
 
 .small-card {
@@ -321,6 +315,14 @@ export default {
     pointer-events: none;
     opacity: 0.3;
     background-color: var(--color-blue-light);
+
+    .big-card__header {
+      background-color: var(--color-transparent);
+    }
+
+    .big-card__content {
+      background-color: var(--color-blue-deep);
+    }
   }
 
   &__wind-info {
@@ -334,18 +336,11 @@ export default {
     display: inline-block;
 
     span {
-      margin: 0 5px 0 5px;
+      margin-right: 10px;
+      &:first-child {
+        margin-left: 2px;
+      }
     }
-  }
-
-  &:hover {
-    cursor: grab;
-    background-color: var(--color-blue-light);
-  }
-
-  &:active {
-    cursor: grabbing;
-    filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
   }
 
   &--empty {
@@ -354,35 +349,33 @@ export default {
     background-color: rgba(247, 248, 255, 0.3);
     border: 2px dashed var(--color-border);
   }
-}
 
-.big-card .big-card__content {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 16px 24px 24px 20px;
-  background-color: var(--color-light-grey);
-  transition: background-color var(--transition-base);
-}
+  &__content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px 24px 24px 20px;
+    background-color: var(--color-light-grey);
+    transition: background-color var(--transition-base);
+  }
 
-.big-card__weather-conditions span:last-child {
-  margin-right: 0;
-}
+  &:hover {
+    cursor: grab;
+    background-color: var(--color-blue-light);
 
-.big-card:hover .big-card__header {
-  background-color: var(--color-blue-light);
-}
+    .big-card__header {
+      background-color: var(--color-blue-light);
+    }
 
-.big-card:hover .big-card__content {
-  background-color: var(--color-blue-main);
-}
+    .big-card__content {
+      background-color: var(--color-blue-main);
+    }
+  }
 
-.big-card--shadow .big-card__header {
-  background-color: var(--color-transparent);
-}
-
-.big-card--shadow .big-card__content {
-  background-color: var(--color-blue-deep);
+  &:active {
+    cursor: grabbing;
+    filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
+  }
 }
 
 .small-card--shadow .small-card__city,

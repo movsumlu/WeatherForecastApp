@@ -55,12 +55,12 @@
 </template>
 
 <script>
-import sortMethods from "@/mixins/helper";
+import helper from "@/mixins/helper";
 import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Header",
-  mixins: [sortMethods],
+  mixins: [helper],
   data() {
     return {
       seachCityName: "",
