@@ -75,7 +75,7 @@
 
 <script>
 import Spinner from "@/components/Spinner.vue";
-import sortMethods from "@/mixins/sort-methods";
+import sortMethods from "@/mixins/helper";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {

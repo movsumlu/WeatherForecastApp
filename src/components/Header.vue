@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import sortMethods from "@/mixins/sort-methods";
+import sortMethods from "@/mixins/helper";
 import { mapMutations, mapGetters } from "vuex";
 
 export default {
