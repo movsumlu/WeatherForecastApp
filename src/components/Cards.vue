@@ -32,7 +32,7 @@
       <div class="weather-content__help">
         Перетащите сюда города, погода в которых вам интересна
       </div>
-      <div v-for="city in bigCardsList" :key="city.city">
+      <div v-for="city in filteredBigCards" :key="city.city">
         <div
           class="big-card"
           @dragstart="onDragStart($event, city, 'toSmallCards')"
@@ -99,6 +99,15 @@ export default {
     alphaSortDirect() {
       return this.sortDirect === "alpha";
     },
+    filteredBigCards() {
+      if (this.filters.length) {
+        return this.bigCardsList.filter((bigCard) =>
+          this.filters.find((filter) => bigCard.weather[`${filter}`])
+        );
+      } else {
+        return this.bigCardsList;
+      }
+    },
   },
   methods: {
     ...mapMutations({
@@ -118,7 +127,8 @@ export default {
       let filteredArray = [];
 
       if (type === "toBigCards") {
-        this.bigCardsList.push(droppedCity);
+        if (!this.bigCardsList.some((city) => city.city === droppedCity.city))
+          this.bigCardsList.push(droppedCity);
 
         filteredArray = this.cities.filter(
           (city) => city.city !== droppedCity.city
@@ -133,12 +143,14 @@ export default {
           (city) => city.city !== droppedCity.city
         );
 
-        this.alphaSortDirect
-          ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
-          : this.setCities(
-              this.alphaReverseCitySort([...this.cities, droppedCity])
-            );
-        this.setFullListOfCities([...this.cities, droppedCity]);
+        if (!this.cities.some((city) => city.city === droppedCity.city)) {
+          this.alphaSortDirect
+            ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
+            : this.setCities(
+                this.alphaReverseCitySort([...this.cities, droppedCity])
+              );
+          this.setFullListOfCities([...this.cities, droppedCity]);
+        }
       }
     },
     correctValueOfTemp(temperature) {
