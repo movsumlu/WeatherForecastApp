@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-app__map weather-map">
+  <div class="weather-map">
     <span class="pin pin--temporarily" />
   </div>
 </template>
@@ -12,6 +12,9 @@ export default {
 
 <style lang="scss" scoped>
 .weather-map {
+  flex-grow: 1;
+  width: auto;
+  height: 100%;
   background-image: url("../assets/img/map.jpg");
   background-repeat: no-repeat;
   background-position: center;

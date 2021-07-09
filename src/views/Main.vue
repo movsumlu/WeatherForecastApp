@@ -55,12 +55,6 @@ export default {
     box-shadow: 0 0 40px rgba(11, 23, 78, 0.5);
   }
 
-  &__map {
-    flex-grow: 1;
-    width: auto;
-    height: 100%;
-  }
-
   .icon {
     display: flex;
     justify-content: center;
