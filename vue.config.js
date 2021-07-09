@@ -15,7 +15,7 @@ const plugins = [
 ];
 
 module.exports = {
-  publicPath: "/weatherForecastApp/",
+  publicPath: "/WeatherForecastApp/",
   configureWebpack: {
     plugins,
     resolve: {

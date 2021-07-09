@@ -116,16 +116,11 @@ export default {
     flex-shrink: 0;
     margin-right: 20px;
     margin-bottom: -2px;
-  }
 
-  &__group > div {
-    margin-right: 2px;
-    margin-bottom: 2px;
-  }
-
-  &__group:last-child,
-  &__group > div:last-child {
-    margin-right: 0;
+    & > div {
+      margin-right: 2px;
+      margin-bottom: 2px;
+    }
   }
 
   .input-wrapper {
@@ -139,64 +134,53 @@ export default {
         border: none;
         outline: none;
         transition: background-color var(--transition-base);
-        &hover {
+        &:hover {
           background-color: var(--color-input-hover);
+        }
+        &:focus {
+          background-color: var(--color-input-focus);
+        }
+        &::placeholder {
+          color: var(--color-text-placeholder);
+          transition: opacity var(--transition-base);
+        }
+      }
+    }
+
+    &--radio,
+    &--checkbox {
+      label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--color-label-base);
+        border-radius: 2px;
+        cursor: pointer;
+        transition: background-color var(--transition-base),
+          box-shadow var(--transition-base);
+        user-select: none;
+      }
+
+      input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        clip: rect(0 0 0 0);
+
+        &:checked + label {
+          background-color: var(--color-label-active);
+          box-shadow: none;
         }
       }
 
-      input:focus {
-        background-color: var(--color-input-focus);
-      }
-
-      input::placeholder,
-      input::-ms-input-placeholder {
-        color: var(--color-text-placeholder);
-        transition: opacity var(--transition-base);
+      &:hover {
+        background-color: var(--color-label-hover);
+        box-shadow: 0 4px 10px rgba(11, 23, 78, 0.5);
       }
     }
-  }
-
-  .input-wrapper--radio label,
-  .input-wrapper--checkbox label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-label-base);
-    border-radius: 2px;
-    cursor: pointer;
-    transition: background-color var(--transition-base),
-      box-shadow var(--transition-base);
-    user-select: none;
-  }
-
-  .input-wrapper--radio label:hover,
-  .input-wrapper--checkbox label:hover {
-    background-color: var(--color-label-hover);
-    box-shadow: 0 4px 10px rgba(11, 23, 78, 0.5);
-  }
-
-  .input-wrapper--radio input,
-  .input-wrapper--checkbox input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    clip: rect(0 0 0 0);
-  }
-
-  .input-wrapper--radio input:checked + label,
-  .input-wrapper--checkbox input:checked + label {
-    background-color: var(--color-label-active);
-    box-shadow: none;
-  }
-
-  .input-wrapper--radio input:checked:focus + label,
-  .input-wrapper--checkbox input:checked:focus + label,
-  .input-wrapper--radio input:checked + label:hover,
-  .input-wrapper--checkbox input:checked + label:hover {
-    background-color: var(--color-label-hover-checked);
   }
 }
 </style>
