@@ -46,7 +46,7 @@
         <label :for="condition.value">
           <span
             @click="updateFilters(condition.value)"
-            :class="['icon', `icon--${condition['value']}`]"
+            :class="['icon', `icon--${condition.value}`]"
           />
         </label>
       </div>
@@ -95,7 +95,7 @@ export default {
     },
     updateFilters(value) {
       this.filters.includes(value)
-        ? this.setFilters(this.filters.filter((item) => item !== value))
+        ? this.setFilters(this.filters.splice(this.filters.indexOf(value), 1))
         : this.setFilters(this.filters.push(value));
     },
   },
