@@ -136,7 +136,7 @@ export default {
 
         this.alphaSortDirect
           ? this.setCities(this.alphaCitySort(filteredArray))
-          : this.setCities(this.alphaReverseCitySort(filteredArray));
+          : this.setCities(this.alphaRevCitySort(filteredArray));
         this.setFullListOfCities(filteredArray);
       } else {
         this.bigCardsList = this.bigCardsList.filter(
@@ -147,7 +147,7 @@ export default {
           this.alphaSortDirect
             ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
             : this.setCities(
-                this.alphaReverseCitySort([...this.cities, droppedCity])
+                this.alphaRevCitySort([...this.cities, droppedCity])
               );
           this.setFullListOfCities([...this.cities, droppedCity]);
         }

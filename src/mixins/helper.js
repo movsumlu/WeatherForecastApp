@@ -30,7 +30,7 @@ export default {
     alphaCitySort(array) {
       return array.sort((a, b) => a.city.localeCompare(b.city));
     },
-    alphaReverseCitySort(array) {
+    alphaRevCitySort(array) {
       return array.sort((a, b) => b.city.localeCompare(a.city));
     },
   },

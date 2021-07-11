@@ -21,7 +21,7 @@
           value="alphabet-sort-reverse"
         />
         <label for="alphabet-sort-reverse">
-          <span class="icon icon--arrow-up" @click="sortAlphaReverse"></span>
+          <span class="icon icon--arrow-up" @click="sortalphaRev"></span>
         </label>
       </div>
     </div>
@@ -89,9 +89,9 @@ export default {
       this.setSortDirect("alpha");
       this.setCities(this.alphaCitySort(this.cities));
     },
-    sortAlphaReverse() {
-      this.setSortDirect("alphaReverse");
-      this.setCities(this.alphaReverseCitySort(this.cities));
+    sortalphaRev() {
+      this.setSortDirect("alphaRev");
+      this.setCities(this.alphaRevCitySort(this.cities));
     },
     updateFilters(value) {
       this.filters.includes(value)
