@@ -1,19 +1,11 @@
 <template>
-  <html lang="ru">
-    <head>
-      <title>Прогноз погоды</title>
-      <meta charset="utf-8" />
-    </head>
-    <body>
-      <section class="weather-app">
-        <div class="weather-app__content">
-          <Header />
-          <Cards />
-        </div>
-        <Map />
-      </section>
-    </body>
-  </html>
+  <section class="weather-app">
+    <div class="weather-app__content">
+      <Header />
+      <Cards />
+    </div>
+    <Map />
+  </section>
 </template>
 
 <script>
