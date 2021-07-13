@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "sh deploy.sh",
-    "run tests": "vue-cli-service test:unit",
+    "run tests": "jest",
     "run lint": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
@@ -19,15 +19,16 @@
     "sass-loader": "^10.2.0"
   },
   "devDependencies": {
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/test-utils": "^2.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
+    "babel-jest": "^21.2.0",
     "webpack": "^4.44.2"
   },
   "eslintConfig": {
@@ -60,8 +61,23 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest",
+    "testMatch": [
+      "<rootDir>/tests/**/*.js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
     "transform": {
+      "^.+\\.js$": "babel-jest",
       "^.+\\.vue$": "vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   }
 }
