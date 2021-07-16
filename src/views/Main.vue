@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style>
-@import "../assets/css/style.css";
+@import "~@/assets/css/style.css";
 </style>
 
 <style lang="scss">
@@ -61,53 +61,53 @@ export default {
     &--strips-big {
       width: 6px;
       height: 22px;
-      background-image: url("../assets/img/icons/icon-strips-big.svg");
+      background-image: url("~@/assets/img/icons/icon-strips-big.svg");
     }
 
     &--strips-small {
       width: 6px;
       height: 16px;
-      background-image: url("../assets/img/icons/icon-strips-small.svg");
+      background-image: url("~@/assets/img/icons/icon-strips-small.svg");
     }
 
     &--arrow-down {
-      background-image: url("../assets/img/icons/icon-arrow-down.svg");
+      background-image: url("~@/assets/img/icons/icon-arrow-down.svg");
     }
 
     &--arrow-up {
-      background-image: url("../assets/img/icons/icon-arrow-up.svg");
+      background-image: url("~@/assets/img/icons/icon-arrow-up.svg");
     }
 
     &--rainy {
-      background-image: url("../assets/img/icons/icon-rainy.svg");
+      background-image: url("~@/assets/img/icons/icon-rainy.svg");
     }
 
     &--sunny {
-      background-image: url("../assets/img/icons/icon-sunny.svg");
+      background-image: url("~@/assets/img/icons/icon-sunny.svg");
     }
 
     &--cloudy {
-      background-image: url("../assets/img/icons/icon-cloudy.svg");
+      background-image: url("~@/assets/img/icons/icon-cloudy.svg");
     }
 
     &--snowy {
-      background-image: url("../assets/img/icons/icon-snowy.svg");
+      background-image: url("~@/assets/img/icons/icon-snowy.svg");
     }
 
     &--stormy {
-      background-image: url("../assets/img/icons/icon-stormy.svg");
+      background-image: url("~@/assets/img/icons/icon-stormy.svg");
     }
 
     &--blizzard {
-      background-image: url("../assets/img/icons/icon-blizzard.svg");
+      background-image: url("~@/assets/img/icons/icon-blizzard.svg");
     }
 
     &--metorite {
-      background-image: url("../assets/img/icons/icon-metorite.svg");
+      background-image: url("~@/assets/img/icons/icon-metorite.svg");
     }
 
     &--wind {
-      background-image: url("../assets/img/icons/icon-wind.svg");
+      background-image: url("~@/assets/img/icons/icon-wind.svg");
     }
   }
 }
