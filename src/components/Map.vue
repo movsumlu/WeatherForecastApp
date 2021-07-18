@@ -1,12 +1,24 @@
 <template>
-  <div class="weather-map">
-    <span class="pin pin--temporarily" />
-  </div>
+  <div class="weather-map" id="YMapsID"></div>
 </template>
 
 <script>
 export default {
   name: "Map",
+  created() {
+    ymaps.ready(function () {
+      var map = new ymaps.Map("YMapsID", {
+        center: [46.358803, 48.059937],
+        zoom: 10,
+        controls: [],
+      });
+
+      var squarePlacemark = new ymaps.Placemark([46.358803, 48.059937], {
+        hintContent: "Астрахань",
+      });
+      map.geoObjects.add(squarePlacemark);
+    });
+  },
 };
 </script>
 
@@ -15,39 +27,5 @@ export default {
   flex-grow: 1;
   width: auto;
   height: 100%;
-  background-image: url("~@/assets/img/map.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-
-  .pin {
-    display: block;
-    width: 16px;
-    height: 16px;
-    background-color: var(--color-white);
-    border: 4px solid var(--color-blue-main);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color var(--transition-base),
-      border var(--transition-base), box-shadow var(--transition-base);
-
-    &--temporarily {
-      position: relative;
-      top: 50%;
-      left: 50%;
-    }
-
-    &:hover {
-      background-color: var(--color-blue-light);
-    }
-
-    &:active {
-      background-color: var(--color-blue-main);
-      border: 4px solid var(--color-white);
-      box-shadow: 0 0 0 4px var(--color-blue-main),
-        0 8px 20px rgba(11, 23, 78, 0.5);
-    }
-  }
 }
 </style>
