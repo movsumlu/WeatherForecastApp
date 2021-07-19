@@ -86,7 +86,6 @@ export default {
   mixins: [helper],
   data() {
     return {
-      bigCardsList: [],
       showSmallEmptyCard: false,
       showBigEmptyCard: false,
     };
@@ -95,7 +94,13 @@ export default {
     await this.fetchCities();
   },
   computed: {
-    ...mapGetters(["cities", "showLoader", "sortDirect", "filters"]),
+    ...mapGetters([
+      "cities",
+      "showLoader",
+      "bigCardsList",
+      "sortDirect",
+      "filters",
+    ]),
     alphaSortDirect() {
       return this.sortDirect === "alpha";
     },
@@ -113,6 +118,7 @@ export default {
     ...mapMutations({
       setCities: "SET_CITIES",
       setFullListOfCities: "SET_FULL_LIST_OF_CITIES",
+      setBigCardsList: "SET_BIG_CARDS_LIST",
     }),
     ...mapActions(["fetchCities"]),
     onDragStart(event, city, type) {
@@ -128,7 +134,7 @@ export default {
 
       if (type === "toBigCards") {
         if (!this.bigCardsList.some((city) => city.city === droppedCity.city))
-          this.bigCardsList.push(droppedCity);
+          this.setBigCardsList([...this.bigCardsList, droppedCity]);
 
         filteredArray = this.cities.filter(
           (city) => city.city !== droppedCity.city
@@ -139,8 +145,8 @@ export default {
           : this.setCities(this.alphaRevCitySort(filteredArray));
         this.setFullListOfCities(filteredArray);
       } else {
-        this.bigCardsList = this.bigCardsList.filter(
-          (city) => city.city !== droppedCity.city
+        this.setBigCardsList(
+          this.bigCardsList.filter((city) => city.city !== droppedCity.city)
         );
 
         if (!this.cities.some((city) => city.city === droppedCity.city)) {

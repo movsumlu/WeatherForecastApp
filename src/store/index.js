@@ -5,6 +5,7 @@ export default createStore({
   state: {
     cities: [],
     fullListofCities: [],
+    bigCardsList: [],
     showLoader: true,
     sortDirect: "alpha",
     filters: [],
@@ -12,6 +13,7 @@ export default createStore({
   getters: {
     cities: (state) => state.cities,
     fullListofCities: (state) => state.fullListofCities,
+    bigCardsList: (state) => state.bigCardsList,
     showLoader: (state) => state.showLoader,
     sortDirect: (state) => state.sortDirect,
     filters: (state) => state.filters,
@@ -23,14 +25,17 @@ export default createStore({
     SET_FULL_LIST_OF_CITIES(state, data = []) {
       state.fullListofCities = data;
     },
+    SET_BIG_CARDS_LIST(state, data = []) {
+      state.bigCardsList = data;
+    },
     SET_LOADER(state, data) {
       state.showLoader = data;
     },
     SET_SORT_DIRECTION(state, data) {
       state.sortDirect = data;
     },
-    SET_FILTERS(state, data) {
-      state.sortDirect = data;
+    SET_FILTERS(state, data = []) {
+      state.filters = data;
     },
   },
   actions: {

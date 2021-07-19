@@ -96,7 +96,7 @@ export default {
     updateFilters(value) {
       this.filters.includes(value)
         ? this.setFilters(this.filters.splice(this.filters.indexOf(value), 1))
-        : this.setFilters(this.filters.push(value));
+        : this.setFilters([...this.filters, value]);
     },
   },
 };
