@@ -1,5 +1,5 @@
 <template>
-  <div id="weather-map"></div>
+  <div id="weather-map" />
 </template>
 
 <script>
@@ -7,33 +7,35 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Map",
+  data() {
+    return {
+      initCoordinate: [55.751244, 37.618423],
+    };
+  },
   created() {
     ymaps.ready(this.initMap);
   },
   computed: {
     ...mapGetters(["bigCardsList"]),
-    countOfBigCardsList() {
-      if (this.bigCardsList.length) {
-        this.bigCardsList.forEach((city) => {
-          this.addNewPlacemark(
-            [city.coordinates.latitude, city.coordinates.longitude],
-            city.city
-          );
-          this.map.panTo([
-            city.coordinates.latitude,
-            city.coordinates.longitude,
-          ]);
-        });
-      } else {
-        this.map.panTo([55.751244, 37.618423]);
-      }
-      return this.bigCardsList.length;
+    renderPlacemarks() {
+      return this.bigCardsList.length
+        ? this.bigCardsList.forEach((city) => {
+            this.addNewPlacemark(
+              [city.coordinates.latitude, city.coordinates.longitude],
+              city.city
+            );
+            this.map.panTo([
+              city.coordinates.latitude,
+              city.coordinates.longitude,
+            ]);
+          })
+        : this.map.panTo(this.initCoordinate);
     },
   },
   methods: {
     initMap() {
       this.map = new ymaps.Map("weather-map", {
-        center: [55.751244, 37.618423],
+        center: this.initCoordinate,
         zoom: 10,
         controls: [],
       });
