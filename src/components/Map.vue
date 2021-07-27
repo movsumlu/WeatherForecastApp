@@ -8,22 +8,38 @@ import { mapGetters } from "vuex";
 export default {
   name: "Map",
   created() {
-    let self = this;
-    ymaps.ready(function () {
-      var map = new ymaps.Map("weather-map", {
-        center: [46.358803, 48.059937],
-        zoom: 10,
-        controls: [],
-      });
-      self.addNewPlacemark(map, [46.358803, 48.059937], "Астрахань");
-    });
+    ymaps.ready(this.initMap);
   },
   computed: {
     ...mapGetters(["bigCardsList"]),
+    countOfBigCardsList() {
+      if (this.bigCardsList.length) {
+        this.bigCardsList.forEach((city) => {
+          this.addNewPlacemark(
+            [city.coordinates.latitude, city.coordinates.longitude],
+            city.city
+          );
+          this.map.panTo([
+            city.coordinates.latitude,
+            city.coordinates.longitude,
+          ]);
+        });
+      } else {
+        this.map.panTo([55.751244, 37.618423]);
+      }
+      return this.bigCardsList.length;
+    },
   },
   methods: {
-    addNewPlacemark(map, coordinates, hintContent) {
-      map.geoObjects.add(
+    initMap() {
+      this.map = new ymaps.Map("weather-map", {
+        center: [55.751244, 37.618423],
+        zoom: 10,
+        controls: [],
+      });
+    },
+    addNewPlacemark(coordinates, hintContent) {
+      this.map.geoObjects.add(
         new ymaps.Placemark(coordinates, {
           hintContent: hintContent,
         })
