@@ -17,8 +17,13 @@ export default {
   },
   computed: {
     ...mapGetters(["bigCardsList"]),
-    renderPlacemarks() {
-      return this.bigCardsList.length
+    bigCardsListLength() {
+      return this.bigCardsList.length;
+    },
+  },
+  watch: {
+    bigCardsListLength(newCountOfLength) {
+      newCountOfLength
         ? this.bigCardsList.forEach((city) => {
             this.addNewPlacemark(
               [city.coordinates.latitude, city.coordinates.longitude],
