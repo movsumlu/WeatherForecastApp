@@ -17,10 +17,10 @@
           <span class="small-card__temperature"
             >{{ correctValueOfTemp(city.temperature) }}°C</span
           >
-          <span class="icon icon--strips-small"></span>
+          <span class="icon icon--strips-small" />
         </div>
       </div>
-      <div v-if="showSmallEmptyCard" class="small-card small-card--empty"></div>
+      <div v-if="showSmallEmptyCard" class="small-card small-card--empty" />
     </div>
     <Spinner v-else />
     <div
@@ -39,7 +39,7 @@
           draggable="true"
         >
           <div class="big-card__header">
-            <span class="icon icon--strips-big"></span>
+            <span class="icon icon--strips-big" />
             <span class="big-card__city">{{ city.city }}</span>
           </div>
           <div class="big-card__content">
@@ -52,10 +52,10 @@
                 <span
                   v-if="city.weather[condition['value']]"
                   :class="['icon', `icon--${condition['value']}`]"
-                ></span>
+                />
               </div>
               <div class="big-card__wind">
-                <span class="icon icon--wind"></span>
+                <span class="icon icon--wind" />
                 <span class="big-card__wind-info"
                   >{{ windDirect(city.wind.direct) }}
                   {{ windSpeed(city.wind.speed) }}</span
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div v-if="showBigEmptyCard" class="big-card big-card--empty"></div>
+      <div v-if="showBigEmptyCard" class="big-card big-card--empty" />
     </div>
   </section>
 </template>

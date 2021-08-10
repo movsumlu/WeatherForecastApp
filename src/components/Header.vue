@@ -1,7 +1,10 @@
 <template>
   <section class="sort-form">
     <div class="sort-form__group">
-      <div class="sort-form__input-wrapper input-wrapper--radio">
+      <div
+        class="sort-form__input-wrapper input-wrapper--radio"
+        @click="sortAlpha"
+      >
         <input
           id="alphabet-sort"
           type="radio"
@@ -10,10 +13,13 @@
           checked
         />
         <label for="alphabet-sort">
-          <span class="icon icon--arrow-down" @click="sortAlpha"></span>
+          <span class="icon icon--arrow-down" />
         </label>
       </div>
-      <div class="sort-form__input-wrapper input-wrapper--radio">
+      <div
+        class="sort-form__input-wrapper input-wrapper--radio"
+        @click="sortalphaRev"
+      >
         <input
           id="alphabet-sort-reverse"
           type="radio"
@@ -21,7 +27,7 @@
           value="alphabet-sort-reverse"
         />
         <label for="alphabet-sort-reverse">
-          <span class="icon icon--arrow-up" @click="sortalphaRev"></span>
+          <span class="icon icon--arrow-up" />
         </label>
       </div>
     </div>
@@ -41,13 +47,11 @@
         v-for="condition in weatherConditions"
         :key="condition.value"
         class="sort-form__input-wrapper input-wrapper--checkbox"
+        @click="updateFilters(condition.value)"
       >
         <input type="checkbox" :id="condition.value" />
         <label :for="condition.value">
-          <span
-            @click="updateFilters(condition.value)"
-            :class="['icon', `icon--${condition.value}`]"
-          />
+          <span :class="['icon', `icon--${condition.value}`]" />
         </label>
       </div>
     </div>
