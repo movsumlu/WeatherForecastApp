@@ -1,3 +1,3 @@
-@import url("./variables.css");
-@import url("./global/fonts.css");
-@import url("./global/utils.css");
+@import url("~@/assets/css/variables.css");
+@import url("~@/assets/css/global/fonts.css");
+@import url("~@/assets/css/global/utils.css");
