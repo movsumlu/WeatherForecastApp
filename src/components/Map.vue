@@ -9,7 +9,7 @@ export default {
   name: "Map",
   data() {
     return {
-      initCoordinate: [55.751244, 37.618423],
+      initCoordinate: [55.673559, 37.609218],
     };
   },
   created() {

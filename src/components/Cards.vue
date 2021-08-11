@@ -130,13 +130,12 @@ export default {
     onDrop(event, type) {
       const droppedCity = JSON.parse(event.dataTransfer.getData("droppedCity"));
       this.showBigEmptyCard = this.showSmallEmptyCard = false;
-      let filteredArray = [];
 
       if (type === "toBigCards") {
         if (!this.bigCardsList.some((city) => city.city === droppedCity.city))
           this.setBigCardsList([...this.bigCardsList, droppedCity]);
 
-        filteredArray = this.cities.filter(
+        const filteredArray = this.cities.filter(
           (city) => city.city !== droppedCity.city
         );
 
@@ -276,7 +275,7 @@ export default {
         align-items: center;
         width: 100%;
         padding: 20px 20px 14px 20px;
-        background-color: var(--color-white);
+        background-color: var(--color-text-white);
         transition: background-color var(--transition-base);
       }
 
