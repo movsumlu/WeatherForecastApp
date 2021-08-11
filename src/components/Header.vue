@@ -47,10 +47,9 @@
         v-for="condition in weatherConditions"
         :key="condition.value"
         class="sort-form__input-wrapper input-wrapper--checkbox"
-        @click="updateFilters(condition.value)"
       >
         <input type="checkbox" :id="condition.value" />
-        <label :for="condition.value">
+        <label :for="condition.value" @click="updateFilters(condition.value)">
           <span :class="['icon', `icon--${condition.value}`]" />
         </label>
       </div>
@@ -99,7 +98,11 @@ export default {
     },
     updateFilters(value) {
       this.filters.includes(value)
-        ? this.setFilters(this.filters.splice(this.filters.indexOf(value), 1))
+        ? this.setFilters(
+            this.filters.filter(function (filter) {
+              return filter != value;
+            })
+          )
         : this.setFilters([...this.filters, value]);
     },
   },
