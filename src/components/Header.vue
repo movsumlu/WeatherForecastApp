@@ -71,7 +71,7 @@ export default {
     };
   },
   watch: {
-    seachCityName: function () {
+    seachCityName() {
       this.setCities(
         this.fullListofCities.filter((city) =>
           city.city.toLowerCase().includes(this.seachCityName.toLowerCase())

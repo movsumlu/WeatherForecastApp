@@ -105,13 +105,11 @@ export default {
       return this.sortDirect === "alpha";
     },
     filteredBigCards() {
-      if (this.filters.length) {
-        return this.bigCardsList.filter((bigCard) =>
-          this.filters.find((filter) => bigCard.weather[`${filter}`])
-        );
-      } else {
-        return this.bigCardsList;
-      }
+      return this.filters.length
+        ? this.bigCardsList.filter((bigCard) =>
+            this.filters.find((filter) => bigCard.weather[`${filter}`])
+          )
+        : this.bigCardsList;
     },
   },
   methods: {
