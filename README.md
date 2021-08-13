@@ -22,12 +22,6 @@ npm run build
 npm run deploy
 ```
 
-### run unit tests
-
-```
-npm run tests
-```
-
 ### lints and fixes files
 
 ```
