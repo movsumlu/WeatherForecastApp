@@ -22,11 +22,9 @@ export default {
 };
 </script>
 
-<style>
-@import "~@/assets/css/style.css";
-</style>
-
 <style lang="scss">
+@import "~@/assets/css/style.css";
+
 .weather-app {
   display: flex;
   width: 100%;

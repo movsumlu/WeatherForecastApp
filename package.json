@@ -9,13 +9,13 @@
     "run lint": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
-    "vue": "^3.0.0",
-    "vuex": "^4.0.0-0",
-    "vue-router": "^4.0.0-0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "node-sass": "^6.0.1",
-    "sass-loader": "^10.2.0"
+    "sass-loader": "^10.2.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.0",
@@ -25,6 +25,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-0",
     "webpack": "^4.44.2"
   },
   "eslintConfig": {
@@ -43,7 +45,10 @@
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
           "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ]
+        ],
+        "env": {
+          "jest": true
+        }
       }
     ]
   },
@@ -51,5 +56,11 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest",
+    "transform": {
+      "^.+\\.vue$": "vue-jest"
+    }
+  }
 }
