@@ -1,8 +1,8 @@
 <template>
-  <section class="weather-content__result">
+  <section class="cards-container">
     <div
       v-if="!showLoader"
-      class="weather-content__small-cards"
+      class="small-card__container"
       @drop="onDrop($event, 'toSmallCards')"
       @dragenter.prevent
       @dragover.prevent
@@ -24,12 +24,12 @@
     </div>
     <Spinner v-else />
     <div
-      class="weather-content__big-cards"
+      class="big-card__container"
       @drop="onDrop($event, 'toBigCards')"
       @dragenter.prevent
       @dragover.prevent
     >
-      <div class="weather-content__help">
+      <div class="cards__help">
         Перетащите сюда города, погода в которых вам интересна
       </div>
       <div v-for="city in filteredBigCards" :key="city.city">
@@ -170,8 +170,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.weather-content {
-  &__result {
+.cards {
+  &-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -303,16 +303,6 @@ export default {
         pointer-events: none;
         opacity: 0.3;
         background-color: var(--color-blue-light);
-
-        .big-card {
-          &__header {
-            background-color: var(--color-transparent);
-          }
-
-          &__content {
-            background-color: var(--color-blue-deep);
-          }
-        }
       }
 
       &__wind-info {
@@ -375,27 +365,27 @@ export default {
         filter: drop-shadow(0 8px 20px rgba(11, 23, 78, 0.5));
       }
     }
-  }
 
-  &__small-cards,
-  &__big-cards {
-    width: calc(50% - 2px);
-    height: 100%;
-    padding-bottom: 100px;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    .small-card__container,
+    .big-card__container {
+      width: calc(50% - 2px);
+      height: 100%;
+      padding-bottom: 100px;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
 
-    > div {
-      margin-bottom: 2px;
-      &:last-child {
-        margin-bottom: 80px;
+      > div {
+        margin-bottom: 2px;
+        &:last-child {
+          margin-bottom: 80px;
+        }
       }
-    }
 
-    &::-webkit-scrollbar,
-    &::-webkit-scrollbar {
-      display: none;
+      &::-webkit-scrollbar,
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 }

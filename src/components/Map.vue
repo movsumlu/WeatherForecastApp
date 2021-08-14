@@ -1,5 +1,5 @@
 <template>
-  <div id="weather-map" />
+  <div id="map" />
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     initMap() {
-      this.map = new ymaps.Map("weather-map", {
+      this.map = new ymaps.Map("map", {
         center: this.initCoordinate,
         zoom: 10,
         controls: [],
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#weather-map {
+#map {
   flex-grow: 1;
   width: auto;
   height: 100%;

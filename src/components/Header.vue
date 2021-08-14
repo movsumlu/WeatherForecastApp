@@ -1,8 +1,8 @@
 <template>
-  <section class="sort-form">
-    <div class="sort-form__group">
+  <section class="header">
+    <div class="header__group">
       <div
-        class="sort-form__input-wrapper input-wrapper--radio"
+        class="header__input-wrapper input-wrapper--radio"
         @click="sortAlpha"
       >
         <input
@@ -16,7 +16,7 @@
         </label>
       </div>
       <div
-        class="sort-form__input-wrapper input-wrapper--radio"
+        class="header__input-wrapper input-wrapper--radio"
         @click="sortalphaRev"
       >
         <input
@@ -29,8 +29,8 @@
         </label>
       </div>
     </div>
-    <div class="sort-form__group">
-      <div class="sort-form__input-wrapper input-wrapper--search">
+    <div class="header__group">
+      <div class="header__input-wrapper input-wrapper--search">
         <input
           type="search"
           v-model="seachCityName"
@@ -40,11 +40,11 @@
         />
       </div>
     </div>
-    <div class="sort-form__group">
+    <div class="header__group">
       <div
         v-for="condition in weatherConditions"
         :key="condition.value"
-        class="sort-form__input-wrapper input-wrapper--checkbox"
+        class="header__input-wrapper input-wrapper--checkbox"
       >
         <input type="checkbox" :id="condition.value" />
         <label :for="condition.value" @click="updateFilters(condition.value)">
@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sort-form {
+.header {
   display: flex;
   min-width: 712px;
   padding: 12px 20px;

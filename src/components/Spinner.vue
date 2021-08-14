@@ -1,26 +1,15 @@
 <template>
-  <div class="loader-container">
+  <div class="loader">
     <svg height="100" width="100" viewBox="0 0 100 100">
-      <circle class="loader-container--svg bg" cx="50" cy="50" r="45"></circle>
-      <circle
-        class="loader-container--svg animate"
-        cx="50"
-        cy="50"
-        r="45"
-      ></circle>
+      <circle class="loader--svg bg" cx="50" cy="50" r="45" />
+      <circle class="loader--svg animate" cx="50" cy="50" r="45" />
     </svg>
-    <p class="loader-container--text">Загрузка ...</p>
+    <p class="loader--text">Загрузка ...</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Spinner",
-};
-</script>
-
 <style lang="scss" scoped>
-.loader-container {
+.loader {
   margin: 70px 0 0 140px;
 
   &--svg {
