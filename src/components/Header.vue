@@ -135,8 +135,9 @@ export default {
     &--search {
       input {
         width: 254px;
-        padding: 8px 20px;
+        padding: 10px 20px;
         color: var(--color-text-input);
+        font-size: 18px;
         background-color: var(--color-input-base);
         border: none;
         outline: none;
