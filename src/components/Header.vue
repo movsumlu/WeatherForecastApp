@@ -6,7 +6,6 @@
         @click="sortAlpha"
       >
         <input
-          id="alphabet-sort"
           type="radio"
           name="alphabet-sort"
           value="alphabet-sort"
@@ -21,7 +20,6 @@
         @click="sortalphaRev"
       >
         <input
-          id="alphabet-sort-reverse"
           type="radio"
           name="alphabet-sort"
           value="alphabet-sort-reverse"
@@ -141,16 +139,14 @@ export default {
         background-color: var(--color-input-base);
         border: none;
         outline: none;
-        transition: background-color var(--transition-base);
-        &:hover {
-          background-color: var(--color-input-hover);
-        }
         &:focus {
           background-color: var(--color-input-focus);
         }
+        &:hover {
+          box-shadow: 0 4px 10px rgba(11, 23, 78, 0.5);
+        }
         &::placeholder {
           color: var(--color-text-placeholder);
-          transition: opacity var(--transition-base);
         }
       }
     }

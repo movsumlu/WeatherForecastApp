@@ -1,7 +1,5 @@
 {
   "name": "weather-forecast-app",
-  "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -25,8 +23,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1",
-    "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0",
     "webpack": "^4.44.2"
   },
   "eslintConfig": {
@@ -38,29 +34,11 @@
       "plugin:vue/vue3-essential",
       "eslint:recommended",
       "@vue/prettier"
-    ],
-    "rules": {},
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
     ]
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest",
-    "transform": {
-      "^.+\\.vue$": "vue-jest"
-    }
-  }
+  ]
 }
