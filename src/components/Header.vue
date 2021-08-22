@@ -6,6 +6,7 @@
         @click="sortAlpha"
       >
         <input
+          id="alphabet-sort"
           type="radio"
           name="alphabet-sort"
           value="alphabet-sort"
@@ -20,6 +21,7 @@
         @click="sortalphaRev"
       >
         <input
+          id="alphabet-sort-reverse"
           type="radio"
           name="alphabet-sort"
           value="alphabet-sort-reverse"
