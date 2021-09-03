@@ -27,11 +27,11 @@ export default {
     };
   },
   methods: {
-    alphaCitySort(array) {
-      return array.sort((a, b) => a.city.localeCompare(b.city));
+    alphaCitySort(array: string[]) {
+      return array.sort((a: any, b: any) => a.city.localeCompare(b.city));
     },
-    alphaRevCitySort(array) {
-      return array.sort((a, b) => b.city.localeCompare(a.city));
+    alphaRevCitySort(array: string[]) {
+      return array.sort((a: any, b: any) => b.city.localeCompare(a.city));
     },
   },
 };
