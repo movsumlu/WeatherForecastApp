@@ -7,11 +7,9 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Map",
-  data() {
-    return {
-      initCoordinate: [55.670559, 37.609218],
-    };
-  },
+  data: () => ({
+    initCoordinate: [55.670559, 37.609218],
+  }),
   created() {
     ymaps.ready(this.initMap);
   },

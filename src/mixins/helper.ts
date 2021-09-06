@@ -1,31 +1,29 @@
 export default {
-  data() {
-    return {
-      weatherConditions: [
-        {
-          value: "rainy",
-        },
-        {
-          value: "sunny",
-        },
-        {
-          value: "cloudy",
-        },
-        {
-          value: "snowy",
-        },
-        {
-          value: "stormy",
-        },
-        {
-          value: "blizzard",
-        },
-        {
-          value: "metorite",
-        },
-      ],
-    };
-  },
+  data: () => ({
+    weatherConditions: [
+      {
+        value: "rainy",
+      },
+      {
+        value: "sunny",
+      },
+      {
+        value: "cloudy",
+      },
+      {
+        value: "snowy",
+      },
+      {
+        value: "stormy",
+      },
+      {
+        value: "blizzard",
+      },
+      {
+        value: "metorite",
+      },
+    ],
+  }),
   methods: {
     alphaCitySort(array: string[]) {
       return array.sort((a: any, b: any) => a.city.localeCompare(b.city));
