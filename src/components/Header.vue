@@ -38,7 +38,7 @@
           v-model="seachCityName"
           @focus="inputFocused = true"
           @blur="inputFocused = false"
-          :placeholder="inputFocused ? '' : 'Название города'"
+          :placeholder="placeholderText"
         />
       </div>
     </div>
@@ -57,23 +57,23 @@
   </section>
 </template>
 
-<script>
-import helper from "@/mixins/helper";
+<script lang="ts">
+import { defineComponent } from "vue";
 import { mapMutations, mapGetters } from "vuex";
+import helper from "@/mixins/helper";
+import ObjectOfCity from "@/models/Models";
 
-export default {
+export default defineComponent({
   name: "Header",
   mixins: [helper],
-  data() {
-    return {
-      seachCityName: "",
-      inputFocused: false,
-    };
-  },
+  data: () => ({
+    seachCityName: "",
+    inputFocused: false,
+  }),
   watch: {
     seachCityName() {
       this.setCities(
-        this.fullListofCities.filter((city) =>
+        this.fullListofCities.filter((city: ObjectOfCity) =>
           city.city.toLowerCase().includes(this.seachCityName.toLowerCase())
         )
       );
@@ -81,6 +81,9 @@ export default {
   },
   computed: {
     ...mapGetters(["cities", "fullListofCities", "filters"]),
+    placeholderText(): string {
+      return this.inputFocused ? "" : "Название города";
+    },
   },
   methods: {
     ...mapMutations({
@@ -96,17 +99,17 @@ export default {
       this.setSortDirect("alphaRev");
       this.setCities(this.alphaRevCitySort(this.cities));
     },
-    updateFilters(value) {
-      this.filters.includes(value)
-        ? this.setFilters(
-            this.filters.filter(function (filter) {
+    updateFilters(value: string) {
+      this.setFilters(
+        this.filters.includes(value)
+          ? this.filters.filter(function (filter: string) {
               return filter != value;
             })
-          )
-        : this.setFilters([...this.filters, value]);
+          : [...this.filters, value]
+      );
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

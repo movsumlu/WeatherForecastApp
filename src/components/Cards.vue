@@ -73,23 +73,23 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import Spinner from "@/components/Spinner.vue";
 import helper from "@/mixins/helper";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import ObjectOfCity from "@/models/Models";
 
-export default {
+export default defineComponent({
   name: "Cards",
   components: {
     Spinner,
   },
   mixins: [helper],
-  data() {
-    return {
-      showSmallEmptyCard: false,
-      showBigEmptyCard: false,
-    };
-  },
+  data: () => ({
+    showSmallEmptyCard: false,
+    showBigEmptyCard: false,
+  }),
   async created() {
     await this.fetchCities();
   },
@@ -101,13 +101,13 @@ export default {
       "sortDirect",
       "filters",
     ]),
-    alphaSortDirect() {
+    alphaSortDirect(): boolean {
       return this.sortDirect === "alpha";
     },
-    filteredBigCards() {
+    filteredBigCards(): ObjectOfCity[] {
       return this.filters.length
-        ? this.bigCardsList.filter((bigCard) =>
-            this.filters.find((filter) => bigCard.weather[`${filter}`])
+        ? this.bigCardsList.filter((bigCard: any) =>
+            this.filters.find((filter: string) => bigCard.weather[`${filter}`])
           )
         : this.bigCardsList;
     },
@@ -119,54 +119,75 @@ export default {
       setBigCardsList: "SET_BIG_CARDS_LIST",
     }),
     ...mapActions(["fetchCities"]),
-    onDragStart(event, city, type) {
-      event.dataTransfer.setData("droppedCity", JSON.stringify(city));
+    onDragStart(event: DragEvent, city: ObjectOfCity, type: string) {
+      if (event.dataTransfer) {
+        event.dataTransfer.setData("droppedCity", JSON.stringify(city));
+      }
+
       type === "toBigCards"
         ? (this.showBigEmptyCard = true)
         : (this.showSmallEmptyCard = true);
     },
-    onDrop(event, type) {
-      const droppedCity = JSON.parse(event.dataTransfer.getData("droppedCity"));
-      this.showBigEmptyCard = this.showSmallEmptyCard = false;
-
-      if (type === "toBigCards") {
-        if (!this.bigCardsList.some((city) => city.city === droppedCity.city))
-          this.setBigCardsList([...this.bigCardsList, droppedCity]);
-
-        const filteredArray = this.cities.filter(
-          (city) => city.city !== droppedCity.city
+    onDrop(event: DragEvent, type: string) {
+      if (event.dataTransfer) {
+        const droppedCity = JSON.parse(
+          event.dataTransfer.getData("droppedCity")
         );
+        this.showBigEmptyCard = this.showSmallEmptyCard = false;
 
-        this.alphaSortDirect
-          ? this.setCities(this.alphaCitySort(filteredArray))
-          : this.setCities(this.alphaRevCitySort(filteredArray));
-        this.setFullListOfCities(filteredArray);
-      } else {
-        this.setBigCardsList(
-          this.bigCardsList.filter((city) => city.city !== droppedCity.city)
-        );
+        if (type === "toBigCards") {
+          if (
+            !this.bigCardsList.some(
+              (city: ObjectOfCity) => city.city === droppedCity.city
+            )
+          )
+            this.setBigCardsList([...this.bigCardsList, droppedCity]);
 
-        if (!this.cities.some((city) => city.city === droppedCity.city)) {
-          this.alphaSortDirect
-            ? this.setCities(this.alphaCitySort([...this.cities, droppedCity]))
-            : this.setCities(
-                this.alphaRevCitySort([...this.cities, droppedCity])
-              );
-          this.setFullListOfCities([...this.cities, droppedCity]);
+          const filteredArray = this.cities.filter(
+            (city: ObjectOfCity) => city.city !== droppedCity.city
+          );
+
+          this.setCities(
+            this.alphaSortDirect
+              ? this.alphaCitySort(filteredArray)
+              : this.alphaRevCitySort(filteredArray)
+          );
+        } else {
+          this.setBigCardsList(
+            this.bigCardsList.filter(
+              (city: ObjectOfCity) => city.city !== droppedCity.city
+            )
+          );
+
+          if (
+            !this.cities.some(
+              (city: ObjectOfCity) => city.city === droppedCity.city
+            )
+          ) {
+            this.setCities(
+              this.alphaSortDirect
+                ? this.alphaCitySort([...this.cities, droppedCity])
+                : this.setCities(
+                    this.alphaRevCitySort([...this.cities, droppedCity])
+                  )
+            );
+
+            this.setFullListOfCities([...this.cities, droppedCity]);
+          }
         }
       }
     },
-    correctValueOfTemp(temperature) {
+    correctValueOfTemp(temperature: number): number | string {
       return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
     },
-    windDirect(direct) {
+    windDirect(direct: string): string {
       return direct ? direct + "," : "";
     },
-    windSpeed(speed) {
+    windSpeed(speed: string): string {
       return speed ? speed + " м/с" : "";
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
