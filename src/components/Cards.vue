@@ -119,7 +119,7 @@ export default defineComponent({
       setBigCardsList: "SET_BIG_CARDS_LIST",
     }),
     ...mapActions(["fetchCities"]),
-    onDragStart(event: DragEvent, city: ObjectOfCity, type: string) {
+    onDragStart(event: DragEvent, city: ObjectOfCity, type: string): void {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
       }
@@ -128,7 +128,7 @@ export default defineComponent({
         ? (this.showBigEmptyCard = true)
         : (this.showSmallEmptyCard = true);
     },
-    onDrop(event: DragEvent, type: string) {
+    onDrop(event: DragEvent, type: string): void {
       if (event.dataTransfer) {
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")

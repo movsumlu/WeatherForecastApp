@@ -91,19 +91,19 @@ export default defineComponent({
       setSortDirect: "SET_SORT_DIRECTION",
       setFilters: "SET_FILTERS",
     }),
-    sortAlpha() {
+    sortAlpha(): void {
       this.setSortDirect("alpha");
       this.setCities(this.alphaCitySort(this.cities));
     },
-    sortalphaRev() {
+    sortalphaRev(): void {
       this.setSortDirect("alphaRev");
       this.setCities(this.alphaRevCitySort(this.cities));
     },
-    updateFilters(value: string) {
+    updateFilters(value: string): void {
       this.setFilters(
         this.filters.includes(value)
           ? this.filters.filter(function (filter: string) {
-              return filter != value;
+              return filter !== value;
             })
           : [...this.filters, value]
       );
