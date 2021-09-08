@@ -122,11 +122,11 @@ export default defineComponent({
     onDragStart(event: DragEvent, city: ObjectOfCity, type: string): void {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
-      }
 
-      type === "toBigCards"
-        ? (this.showBigEmptyCard = true)
-        : (this.showSmallEmptyCard = true);
+        type === "toBigCards"
+          ? (this.showBigEmptyCard = true)
+          : (this.showSmallEmptyCard = true);
+      }
     },
     onDrop(event: DragEvent, type: string): void {
       if (event.dataTransfer) {

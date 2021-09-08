@@ -1,3 +1,5 @@
+import ObjectOfCity from "@/models/Models";
+
 export default {
   data: () => ({
     weatherConditions: [
@@ -25,11 +27,15 @@ export default {
     ],
   }),
   methods: {
-    alphaCitySort(array: string[]) {
-      return array.sort((a: any, b: any) => a.city.localeCompare(b.city));
+    alphaCitySort(array: ObjectOfCity[]) {
+      return array.sort((a: ObjectOfCity, b: ObjectOfCity) =>
+        a.city.localeCompare(b.city)
+      );
     },
-    alphaRevCitySort(array: string[]) {
-      return array.sort((a: any, b: any) => b.city.localeCompare(a.city));
+    alphaRevCitySort(array: ObjectOfCity[]) {
+      return array.sort((a: ObjectOfCity, b: ObjectOfCity) =>
+        b.city.localeCompare(a.city)
+      );
     },
   },
 };
