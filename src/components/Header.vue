@@ -124,8 +124,7 @@ export default defineComponent({
     flex-wrap: wrap;
     align-items: start;
     flex-shrink: 0;
-    margin-right: 20px;
-    margin-bottom: -2px;
+    margin: 0 20px -2px 0;
 
     & > div {
       margin-right: 2px;
@@ -137,7 +136,7 @@ export default defineComponent({
     display: flex;
     &--search {
       input {
-        width: 254px;
+        width: 230px;
         padding: 10px 20px;
         color: var(--color-text-input);
         font-size: 18px;

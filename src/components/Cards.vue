@@ -29,7 +29,7 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <div class="cards__help">
+      <div v-if="!showLoader" class="cards__help">
         Перетащите сюда города, погода в которых вам интересна
       </div>
       <div v-for="city in filteredBigCards" :key="city.city">
