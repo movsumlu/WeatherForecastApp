@@ -20,23 +20,23 @@ export default createStore({
     filters: (state): string[] => state.filters,
   },
   mutations: {
-    SET_CITIES(state, data: []) {
-      state.cities = data;
+    SET_CITIES(state, payload: []) {
+      state.cities = payload;
     },
-    SET_FULL_LIST_OF_CITIES(state, data: []) {
-      state.fullListofCities = data;
+    SET_FULL_LIST_OF_CITIES(state, payload: []) {
+      state.fullListofCities = payload;
     },
-    SET_BIG_CARDS_LIST(state, data: []) {
-      state.bigCardsList = data;
+    SET_BIG_CARDS_LIST(state, payload: []) {
+      state.bigCardsList = payload;
     },
-    SET_LOADER(state, data: boolean) {
-      state.showLoader = data;
+    SET_LOADER(state, payload: boolean) {
+      state.showLoader = payload;
     },
-    SET_SORT_DIRECTION(state, data: string) {
-      state.sortDirect = data;
+    SET_SORT_DIRECTION(state, payload: string) {
+      state.sortDirect = payload;
     },
-    SET_FILTERS(state, data: []) {
-      state.filters = data;
+    SET_FILTERS(state, payload: []) {
+      state.filters = payload;
     },
   },
   actions: {
