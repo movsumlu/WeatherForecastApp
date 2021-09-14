@@ -107,7 +107,7 @@ export default defineComponent({
     filteredBigCards(): ObjectOfCity[] {
       return this.filters.length
         ? this.bigCardsList.filter((bigCard: any) =>
-            this.filters.find((filter: string) => bigCard.weather[`${filter}`])
+            this.filters.find((filter: string) => bigCard.weather[filter])
           )
         : this.bigCardsList;
     },
