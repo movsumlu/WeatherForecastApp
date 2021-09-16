@@ -29,8 +29,11 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <div v-if="!showLoader" class="cards__help">
-        Перетащите сюда города, погода в которых вам интересна
+      <div
+        v-if="!showLoader && !showBigEmptyCard && !filteredBigCards.length"
+        class="cards__help"
+      >
+        Перетащите сюда города, <br />погода в которых вам интересна
       </div>
       <div v-for="city in filteredBigCards" :key="city.city">
         <div
@@ -232,19 +235,6 @@ export default defineComponent({
       z-index: 1;
     }
 
-    &__help {
-      position: absolute;
-      top: 56px;
-      left: 0;
-      z-index: -1;
-      width: 100%;
-      padding-right: 65px;
-      padding-left: 65px;
-      line-height: 32px;
-      text-align: center;
-      color: var(--color-text-help);
-    }
-
     &__sort {
       .sort-form__group:nth-child(3) {
         width: 292px;
@@ -436,6 +426,11 @@ export default defineComponent({
         display: none;
       }
     }
+  }
+
+  &__help {
+    text-align: center;
+    margin-top: 60px;
   }
 }
 </style>
