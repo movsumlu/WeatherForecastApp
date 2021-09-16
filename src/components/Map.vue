@@ -1,23 +1,29 @@
 <template>
-  <div id="map" />
+  <div id="map" style="flex-grow: 1" />
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "Map",
-  data: () => ({
-    initCoordinate: [55.670559, 37.609218],
-  }),
-  created() {
-    ymaps.ready(this.initMap);
-  },
-  computed: {
-    ...mapGetters(["bigCardsList"]),
-    bigCardsListLength() {
-      return this.bigCardsList.length;
-    },
+  setup() {
+    const store = useStore();
+
+    const initCoordinate = ref([55.670559, 37.609218]);
+
+    const bigCardsList = computed(() => store.getters.bigCardsList);
+
+    const bigCardsListLength = computed(
+      () => store.getters.bigCardsList.length
+    );
+
+    return {
+      initCoordinate,
+      bigCardsList,
+      bigCardsListLength,
+    };
   },
   watch: {
     bigCardsListLength(newCountOfLength) {
@@ -34,6 +40,9 @@ export default {
           })
         : this.map.panTo(this.initCoordinate);
     },
+  },
+  created() {
+    ymaps.ready(this.initMap);
   },
   methods: {
     initMap() {
@@ -53,11 +62,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-#map {
-  flex-grow: 1;
-  width: auto;
-  height: 100%;
-}
-</style>

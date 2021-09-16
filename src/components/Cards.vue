@@ -74,8 +74,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
 import Spinner from "@/components/Spinner.vue";
 import helper from "@/mixins/helper";
 import ObjectOfCity from "@/models/Models";
@@ -86,106 +86,134 @@ export default defineComponent({
     Spinner,
   },
   mixins: [helper],
-  data: () => ({
-    showSmallEmptyCard: false,
-    showBigEmptyCard: false,
-  }),
-  async created() {
-    await this.fetchCities();
-  },
-  computed: {
-    ...mapGetters([
-      "cities",
-      "showLoader",
-      "bigCardsList",
-      "sortDirect",
-      "filters",
-    ]),
-    alphaSortDirect(): boolean {
-      return this.sortDirect === "alpha";
-    },
-    filteredBigCards(): ObjectOfCity[] {
-      return this.filters.length
-        ? this.bigCardsList.filter((bigCard: any) =>
-            this.filters.find((filter: string) => bigCard.weather[filter])
+  setup() {
+    const store = useStore();
+    const { alphaCitySort, alphaRevCitySort } = helper.methods;
+
+    store.dispatch("fetchCities");
+
+    let showSmallEmptyCard = ref(false);
+    let showBigEmptyCard = ref(false);
+
+    const cities = computed((): ObjectOfCity[] => store.getters.cities);
+    const showLoader = computed((): boolean => store.getters.showLoader);
+    const bigCardsList = computed(
+      (): ObjectOfCity[] => store.getters.bigCardsList
+    );
+    const filters = computed((): string[] => store.getters.filters);
+
+    const filteredBigCards = computed((): ObjectOfCity[] =>
+      store.getters.filters.length
+        ? store.getters.bigCardsList.filter((bigCard: any) =>
+            store.getters.filters.find(
+              (filter: string) => bigCard.weather[filter]
+            )
           )
-        : this.bigCardsList;
-    },
-  },
-  methods: {
-    ...mapMutations({
-      setCities: "SET_CITIES",
-      setFullListOfCities: "SET_FULL_LIST_OF_CITIES",
-      setBigCardsList: "SET_BIG_CARDS_LIST",
-    }),
-    ...mapActions(["fetchCities"]),
-    onDragStart(event: DragEvent, city: ObjectOfCity, type: string): void {
+        : store.getters.bigCardsList
+    );
+
+    const alphaSortDirect = computed(
+      () => store.getters.sortDirect === "alpha"
+    );
+
+    function onDragStart(
+      event: DragEvent,
+      city: ObjectOfCity,
+      type: string
+    ): void {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
 
         type === "toBigCards"
-          ? (this.showBigEmptyCard = true)
-          : (this.showSmallEmptyCard = true);
+          ? (showBigEmptyCard.value = true)
+          : (showSmallEmptyCard.value = true);
       }
-    },
-    onDrop(event: DragEvent, type: string): void {
+    }
+
+    function onDrop(event: DragEvent, type: string): void {
       if (event.dataTransfer) {
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")
         );
-        this.showBigEmptyCard = this.showSmallEmptyCard = false;
+        showBigEmptyCard.value = showSmallEmptyCard.value = false;
 
         if (type === "toBigCards") {
           if (
-            !this.bigCardsList.some(
+            !store.getters.bigCardsList.some(
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           )
-            this.setBigCardsList([...this.bigCardsList, droppedCity]);
+            store.commit("SET_BIG_CARDS_LIST", [
+              ...store.getters.bigCardsList,
+              droppedCity,
+            ]);
 
-          const filteredArray = this.cities.filter(
+          const filteredArray = store.getters.cities.filter(
             (city: ObjectOfCity) => city.city !== droppedCity.city
           );
 
-          this.setCities(
-            this.alphaSortDirect
-              ? this.alphaCitySort(filteredArray)
-              : this.alphaRevCitySort(filteredArray)
+          store.commit(
+            "SET_CITIES",
+            alphaSortDirect
+              ? alphaCitySort(filteredArray)
+              : alphaRevCitySort(filteredArray)
           );
         } else {
-          this.setBigCardsList(
-            this.bigCardsList.filter(
+          store.commit(
+            "SET_BIG_CARDS_LIST",
+            store.getters.bigCardsList.filter(
               (city: ObjectOfCity) => city.city !== droppedCity.city
             )
           );
 
           if (
-            !this.cities.some(
+            !store.getters.cities.some(
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           ) {
-            this.setCities(
-              this.alphaSortDirect
-                ? this.alphaCitySort([...this.cities, droppedCity])
-                : this.setCities(
-                    this.alphaRevCitySort([...this.cities, droppedCity])
-                  )
+            store.commit(
+              "SET_CITIES",
+              alphaSortDirect
+                ? alphaCitySort([...store.getters.cities, droppedCity])
+                : alphaRevCitySort([...store.getters.cities, droppedCity])
             );
 
-            this.setFullListOfCities([...this.cities, droppedCity]);
+            store.commit("SET_FULL_LIST_OF_CITIES", [
+              ...store.getters.cities,
+              droppedCity,
+            ]);
           }
         }
       }
-    },
-    correctValueOfTemp(temperature: number): number | string {
-      return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
-    },
-    windDirect(direct: string): string {
+    }
+
+    function windDirect(direct: string): string {
       return direct ? direct + "," : "";
-    },
-    windSpeed(speed: string): string {
+    }
+
+    function correctValueOfTemp(temperature: number): number | string {
+      return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
+    }
+
+    function windSpeed(speed: string): string {
       return speed ? speed + " м/с" : "";
-    },
+    }
+
+    return {
+      cities,
+      showLoader,
+      bigCardsList,
+      filters,
+      filteredBigCards,
+      alphaSortDirect,
+      showSmallEmptyCard,
+      showBigEmptyCard,
+      onDragStart,
+      onDrop,
+      windDirect,
+      correctValueOfTemp,
+      windSpeed,
+    };
   },
 });
 </script>

@@ -58,56 +58,72 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapGetters } from "vuex";
+import { defineComponent, computed, ref, watch } from "vue";
+import { useStore } from "vuex";
 import helper from "@/mixins/helper";
 import ObjectOfCity from "@/models/Models";
 
 export default defineComponent({
   name: "Header",
   mixins: [helper],
-  data: () => ({
-    seachCityName: "",
-    inputFocused: false,
-  }),
-  watch: {
-    seachCityName() {
-      this.setCities(
-        this.fullListofCities.filter((city: ObjectOfCity) =>
-          city.city.toLowerCase().includes(this.seachCityName.toLowerCase())
+  setup() {
+    const store = useStore();
+    const { alphaCitySort, alphaRevCitySort } = helper.methods;
+
+    const seachCityName = ref("");
+    const inputFocused = ref(false);
+
+    watch(seachCityName, () => {
+      store.commit(
+        "SET_CITIES",
+        store.getters.fullListofCities.filter((city: ObjectOfCity) =>
+          city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
         )
       );
-    },
-  },
-  computed: {
-    ...mapGetters(["cities", "fullListofCities", "filters"]),
-    placeholderText(): string {
-      return this.inputFocused ? "" : "Название города";
-    },
-  },
-  methods: {
-    ...mapMutations({
-      setCities: "SET_CITIES",
-      setSortDirect: "SET_SORT_DIRECTION",
-      setFilters: "SET_FILTERS",
-    }),
-    sortAlpha(): void {
-      this.setSortDirect("alpha");
-      this.setCities(this.alphaCitySort(this.cities));
-    },
-    sortalphaRev(): void {
-      this.setSortDirect("alphaRev");
-      this.setCities(this.alphaRevCitySort(this.cities));
-    },
-    updateFilters(value: string): void {
-      this.setFilters(
-        this.filters.includes(value)
-          ? this.filters.filter(function (filter: string) {
+    });
+
+    const cities = computed((): ObjectOfCity[] => store.getters.cities);
+    const fullListofCities = computed(
+      (): ObjectOfCity[] => store.getters.fullListofCities
+    );
+    const filters = computed((): string[] => store.getters.filters);
+
+    const placeholderText = computed((): string =>
+      inputFocused.value ? "" : "Название города"
+    );
+
+    function updateFilters(value: string): void {
+      store.commit(
+        "SET_FILTERS",
+        store.getters.filters.includes(value)
+          ? store.getters.filters.filter(function (filter: string) {
               return filter !== value;
             })
-          : [...this.filters, value]
+          : [...store.getters.filters, value]
       );
-    },
+    }
+
+    function sortAlpha(): void {
+      store.commit("SET_SORT_DIRECTION", "alpha");
+      store.commit("SET_CITIES", alphaCitySort(cities.value));
+    }
+
+    function sortalphaRev(): void {
+      store.commit("SET_SORT_DIRECTION", "alphaRev");
+      store.commit("SET_CITIES", alphaRevCitySort(cities.value));
+    }
+
+    return {
+      cities,
+      fullListofCities,
+      filters,
+      inputFocused,
+      seachCityName,
+      placeholderText,
+      updateFilters,
+      sortAlpha,
+      sortalphaRev,
+    };
   },
 });
 </script>
