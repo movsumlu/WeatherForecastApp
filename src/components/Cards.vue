@@ -1,5 +1,5 @@
 <template>
-  <section class="cards-container">
+  <section class="cards">
     <div
       v-if="!showLoader"
       class="small-card__container"
@@ -31,7 +31,7 @@
     >
       <div
         v-if="!showLoader && !showBigEmptyCard && !filteredBigCards.length"
-        class="cards-container__help"
+        class="cards__help"
       >
         Перетащите сюда города, <br />погода в которых вам интересна
       </div>
@@ -222,17 +222,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.cards-container {
+.cards {
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 100%;
   padding: 2px 4px 0 4px;
-
-  &__big-cards {
-    position: relative;
-    z-index: 1;
-  }
 
   &__sort {
     .sort-form__group:nth-child(3) {

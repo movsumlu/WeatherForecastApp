@@ -1,10 +1,7 @@
 <template>
   <section class="header">
     <div class="header__group">
-      <div
-        class="header__input-wrapper input-wrapper--radio"
-        @click="sortAlpha"
-      >
+      <div class="header__wrapper--radio" @click="sortAlpha">
         <input
           id="alphabet-sort"
           type="radio"
@@ -16,10 +13,7 @@
           <span class="icon icon--arrow-down" />
         </label>
       </div>
-      <div
-        class="header__input-wrapper input-wrapper--radio"
-        @click="sortalphaRev"
-      >
+      <div class="header__wrapper--radio" @click="sortalphaRev">
         <input
           id="alphabet-sort-reverse"
           type="radio"
@@ -32,7 +26,7 @@
       </div>
     </div>
     <div class="header__group">
-      <div class="header__input-wrapper input-wrapper--search">
+      <div class="header__wrapper--search">
         <input
           type="search"
           v-model="seachCityName"
@@ -46,7 +40,7 @@
       <div
         v-for="condition in weatherConditions"
         :key="condition.value"
-        class="header__input-wrapper input-wrapper--checkbox"
+        class="header__wrapper--checkbox"
       >
         <input type="checkbox" :id="condition.value" />
         <label :for="condition.value" @click="updateFilters(condition.value)">
@@ -143,12 +137,11 @@ export default defineComponent({
     margin: 0 20px -2px 0;
 
     & > div {
-      margin-right: 2px;
-      margin-bottom: 2px;
+      margin: 0 2px 2px 0;
     }
   }
 
-  .input-wrapper {
+  &__wrapper {
     display: flex;
     &--search {
       input {
