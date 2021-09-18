@@ -21,9 +21,3 @@ npm run build
 ```
 npm run deploy
 ```
-
-### lints and fixes files
-
-```
-npm run lint
-```

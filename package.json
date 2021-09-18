@@ -3,8 +3,7 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "sh deploy.sh",
-    "run linter": "eslint --ext .js,.vue src --fix"
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "axios": "^0.21.1",
