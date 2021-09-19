@@ -1,6 +1,6 @@
 <template>
   <section class="weather-app">
-    <div class="weather-app__content">
+    <div class="weather-app__cards">
       <Header />
       <Cards />
     </div>
@@ -33,7 +33,7 @@ export default {
   min-height: 880px;
   overflow: hidden;
 
-  &__content {
+  &__cards {
     position: relative;
     z-index: 1;
     flex-shrink: 0;
@@ -43,6 +43,10 @@ export default {
     overflow: hidden;
     background: var(--color-blue-lightest);
     box-shadow: 0 0 40px rgba(11, 23, 78, 0.5);
+  }
+
+  #map {
+    flex-grow: 1;
   }
 
   .icon {

@@ -372,7 +372,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       width: 100%;
-      padding: 16px 24px 24px 20px;
+      padding: 16px 24px 21px 20px;
       background-color: var(--color-light-grey);
       transition: background-color var(--transition-base);
     }
