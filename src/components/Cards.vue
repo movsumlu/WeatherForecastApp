@@ -106,13 +106,11 @@ export default defineComponent({
     const filters = computed((): string[] => store.getters.filters);
 
     const filteredBigCards = computed((): ObjectOfCity[] =>
-      store.getters.filters.length
-        ? store.getters.bigCardsList.filter((bigCard: any) =>
-            store.getters.filters.find(
-              (filter: string) => bigCard.weather[filter]
-            )
+      filters.value.length
+        ? bigCardsList.value.filter((bigCard: any) =>
+            filters.value.find((filter: string) => bigCard.weather[filter])
           )
-        : store.getters.bigCardsList
+        : bigCardsList.value
     );
 
     const alphaSortDirect = computed(
@@ -142,16 +140,16 @@ export default defineComponent({
 
         if (type === "toBigCards") {
           if (
-            !store.getters.bigCardsList.some(
+            !bigCardsList.value.some(
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           )
             store.commit("SET_BIG_CARDS_LIST", [
-              ...store.getters.bigCardsList,
+              ...bigCardsList.value,
               droppedCity,
             ]);
 
-          const filteredArray = store.getters.cities.filter(
+          const filteredArray = cities.value.filter(
             (city: ObjectOfCity) => city.city !== droppedCity.city
           );
 
@@ -164,25 +162,25 @@ export default defineComponent({
         } else {
           store.commit(
             "SET_BIG_CARDS_LIST",
-            store.getters.bigCardsList.filter(
+            bigCardsList.value.filter(
               (city: ObjectOfCity) => city.city !== droppedCity.city
             )
           );
 
           if (
-            !store.getters.cities.some(
+            !cities.value.some(
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           ) {
             store.commit(
               "SET_CITIES",
               alphaSortDirect
-                ? alphaCitySort([...store.getters.cities, droppedCity])
-                : alphaRevCitySort([...store.getters.cities, droppedCity])
+                ? alphaCitySort([...cities.value, droppedCity])
+                : alphaRevCitySort([...cities.value, droppedCity])
             );
 
             store.commit("SET_FULL_LIST_OF_CITIES", [
-              ...store.getters.cities,
+              ...cities.value,
               droppedCity,
             ]);
           }

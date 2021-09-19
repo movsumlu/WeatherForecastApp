@@ -70,7 +70,7 @@ export default defineComponent({
     watch(seachCityName, () => {
       store.commit(
         "SET_CITIES",
-        store.getters.fullListofCities.filter((city: ObjectOfCity) =>
+        fullListofCities.value.filter((city: ObjectOfCity) =>
           city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
         )
       );
@@ -89,11 +89,11 @@ export default defineComponent({
     function updateFilters(value: string): void {
       store.commit(
         "SET_FILTERS",
-        store.getters.filters.includes(value)
-          ? store.getters.filters.filter(function (filter: string) {
+        filters.value.includes(value)
+          ? filters.value.filter(function (filter: string) {
               return filter !== value;
             })
-          : [...store.getters.filters, value]
+          : [...filters.value, value]
       );
     }
 
