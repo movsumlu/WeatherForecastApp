@@ -32,9 +32,8 @@
       <div
         v-if="!showLoader && !showBigEmptyCard && !filteredBigCards.length"
         class="cards__help"
-      >
-        Перетащите сюда города, <br />погода в которых вам интересна
-      </div>
+        v-html="textOfHelp"
+      ></div>
       <div v-for="city in filteredBigCards" :key="city.city">
         <div
           class="big-card"
@@ -115,6 +114,12 @@ export default defineComponent({
 
     const alphaSortDirect = computed(
       () => store.getters.sortDirect === "alpha"
+    );
+
+    const textOfHelp = computed(() =>
+      filters.value.length
+        ? "<p>Увы, нет подходящих городов</p>"
+        : "<p>Перетащите сюда города, <br />погода в которых вам интересна</p>"
     );
 
     function onDragStart(
@@ -209,6 +214,7 @@ export default defineComponent({
       alphaSortDirect,
       showSmallEmptyCard,
       showBigEmptyCard,
+      textOfHelp,
       onDragStart,
       onDrop,
       windDirect,
