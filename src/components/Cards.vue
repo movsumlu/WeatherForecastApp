@@ -236,6 +236,7 @@ export default defineComponent({
   &__help {
     text-align: center;
     margin-top: 60px;
+    user-select: none;
   }
 
   .small-card {
