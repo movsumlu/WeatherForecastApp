@@ -155,7 +155,7 @@ export default defineComponent({
 
           store.commit(
             "SET_CITIES",
-            alphaSortDirect
+            alphaSortDirect.value
               ? alphaCitySort(filteredArray)
               : alphaRevCitySort(filteredArray)
           );
@@ -174,7 +174,7 @@ export default defineComponent({
           ) {
             store.commit(
               "SET_CITIES",
-              alphaSortDirect
+              alphaSortDirect.value
                 ? alphaCitySort([...cities.value, droppedCity])
                 : alphaRevCitySort([...cities.value, droppedCity])
             );
