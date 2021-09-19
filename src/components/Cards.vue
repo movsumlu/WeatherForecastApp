@@ -108,7 +108,7 @@ export default defineComponent({
     const filteredBigCards = computed((): ObjectOfCity[] =>
       filters.value.length
         ? bigCardsList.value.filter((bigCard: any) =>
-            filters.value.find((filter: string) => bigCard.weather[filter])
+            filters.value.every((filter: string) => bigCard.weather[filter])
           )
         : bigCardsList.value
     );
