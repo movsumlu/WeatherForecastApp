@@ -13,7 +13,7 @@
           <span class="icon icon--arrow-down" />
         </label>
       </div>
-      <div class="header__wrapper--radio" @click="sortalphaRev">
+      <div class="header__wrapper--radio" @click="sortAlphaRev">
         <input
           id="alphabet-sort-reverse"
           type="radio"
@@ -70,15 +70,15 @@ export default defineComponent({
     watch(seachCityName, () => {
       store.commit(
         "SET_CITIES",
-        fullListofCities.value.filter((city: ObjectOfCity) =>
+        fullListOfCities.value.filter((city: ObjectOfCity) =>
           city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
         )
       );
     });
 
     const cities = computed((): ObjectOfCity[] => store.getters.cities);
-    const fullListofCities = computed(
-      (): ObjectOfCity[] => store.getters.fullListofCities
+    const fullListOfCities = computed(
+      (): ObjectOfCity[] => store.getters.fullListOfCities
     );
     const filters = computed((): string[] => store.getters.filters);
 
@@ -102,21 +102,18 @@ export default defineComponent({
       store.commit("SET_CITIES", alphaCitySort(cities.value));
     }
 
-    function sortalphaRev(): void {
+    function sortAlphaRev(): void {
       store.commit("SET_SORT_DIRECTION", "alphaRev");
       store.commit("SET_CITIES", alphaRevCitySort(cities.value));
     }
 
     return {
-      cities,
-      fullListofCities,
-      filters,
       inputFocused,
       seachCityName,
       placeholderText,
       updateFilters,
       sortAlpha,
-      sortalphaRev,
+      sortAlphaRev,
     };
   },
 });

@@ -206,12 +206,9 @@ export default defineComponent({
     }
 
     return {
-      cities,
       showLoader,
-      bigCardsList,
-      filters,
+      cities,
       filteredBigCards,
-      alphaSortDirect,
       showSmallEmptyCard,
       showBigEmptyCard,
       textOfHelp,
