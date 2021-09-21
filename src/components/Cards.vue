@@ -15,7 +15,7 @@
         >
           <span class="small-card__city"> {{ city.city }} </span>
           <span class="small-card__temperature"
-            >{{ correctValueOfTemp(city.temperature) }}°C</span
+            >{{ valueOfTemp(city.temperature) }}°C</span
           >
           <span class="icon icon--strips-small" />
         </div>
@@ -65,7 +65,7 @@
               </div>
             </div>
             <span class="big-card__temperature"
-              >{{ correctValueOfTemp(city.temperature) }}°C</span
+              >{{ valueOfTemp(city.temperature) }}°C</span
             >
           </div>
         </div>
@@ -99,10 +99,11 @@ export default defineComponent({
 
     const cities = computed((): ObjectOfCity[] => store.getters.cities);
     const showLoader = computed((): boolean => store.getters.showLoader);
+    const filters = computed((): string[] => store.getters.filters);
+
     const bigCardsList = computed(
       (): ObjectOfCity[] => store.getters.bigCardsList
     );
-    const filters = computed((): string[] => store.getters.filters);
 
     const filteredBigCards = computed((): ObjectOfCity[] =>
       filters.value.length
@@ -113,10 +114,10 @@ export default defineComponent({
     );
 
     const alphaSortDirect = computed(
-      () => store.getters.sortDirect === "alpha"
+      (): boolean => store.getters.sortDirect === "alpha"
     );
 
-    const textOfHelp = computed(() =>
+    const textOfHelp = computed((): string =>
       filters.value.length
         ? "<p>Увы, нет подходящих городов</p>"
         : "<p>Перетащите сюда города, <br />погода в которых вам интересна</p>"
@@ -141,6 +142,7 @@ export default defineComponent({
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")
         );
+
         showBigEmptyCard.value = showSmallEmptyCard.value = false;
 
         if (type === "toBigCards") {
@@ -197,7 +199,7 @@ export default defineComponent({
       return direct ? direct + "," : "";
     }
 
-    function correctValueOfTemp(temperature: number): number | string {
+    function valueOfTemp(temperature: number): number | string {
       return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
     }
 
@@ -215,7 +217,7 @@ export default defineComponent({
       onDragStart,
       onDrop,
       windDirect,
-      correctValueOfTemp,
+      valueOfTemp,
       windSpeed,
     };
   },

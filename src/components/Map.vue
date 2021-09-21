@@ -1,5 +1,5 @@
 <template>
-  <div id="map" style="flex-grow: 1" />
+  <div id="map" />
 </template>
 
 <script>
@@ -8,6 +8,9 @@ import { useStore } from "vuex";
 
 export default {
   name: "Map",
+  created() {
+    ymaps.ready(this.initMap);
+  },
   setup() {
     const store = useStore();
 
@@ -40,9 +43,6 @@ export default {
           })
         : this.map.panTo(this.initCoordinate);
     },
-  },
-  created() {
-    ymaps.ready(this.initMap);
   },
   methods: {
     initMap() {
