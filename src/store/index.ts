@@ -5,7 +5,7 @@ import ObjectOfCity from "@/models/Models";
 export default createStore({
   state: {
     cities: [],
-    fullListofCities: [],
+    fullListOfCities: [],
     bigCardsList: [],
     showLoader: true,
     sortDirect: "alpha",
@@ -13,7 +13,7 @@ export default createStore({
   },
   getters: {
     cities: (state): ObjectOfCity[] => state.cities,
-    fullListofCities: (state): ObjectOfCity[] => state.fullListofCities,
+    fullListOfCities: (state): ObjectOfCity[] => state.fullListOfCities,
     bigCardsList: (state): ObjectOfCity[] => state.bigCardsList,
     showLoader: (state): boolean => state.showLoader,
     sortDirect: (state): string => state.sortDirect,
@@ -24,7 +24,7 @@ export default createStore({
       state.cities = payload;
     },
     SET_FULL_LIST_OF_CITIES(state, payload: []) {
-      state.fullListofCities = payload;
+      state.fullListOfCities = payload;
     },
     SET_BIG_CARDS_LIST(state, payload: []) {
       state.bigCardsList = payload;
