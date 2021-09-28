@@ -10,6 +10,12 @@ npm install
 npm run dev
 ```
 
+### run tests by Jest
+
+```
+npm run test
+```
+
 ### compiles and minifies for production
 
 ```
