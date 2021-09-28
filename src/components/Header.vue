@@ -67,6 +67,17 @@ export default defineComponent({
     const seachCityName = ref("");
     const inputFocused = ref(false);
 
+    const fullListOfCities = computed(
+      (): ObjectOfCity[] => store.getters.fullListOfCities
+    );
+
+    const cities = computed((): ObjectOfCity[] => store.getters.cities);
+    const filters = computed((): string[] => store.getters.filters);
+
+    const placeholderText = computed((): string =>
+      inputFocused.value ? "" : "Название города"
+    );
+
     watch(seachCityName, () => {
       store.commit(
         "SET_CITIES",
@@ -75,16 +86,6 @@ export default defineComponent({
         )
       );
     });
-
-    const cities = computed((): ObjectOfCity[] => store.getters.cities);
-    const fullListOfCities = computed(
-      (): ObjectOfCity[] => store.getters.fullListOfCities
-    );
-    const filters = computed((): string[] => store.getters.filters);
-
-    const placeholderText = computed((): string =>
-      inputFocused.value ? "" : "Название города"
-    );
 
     function updateFilters(value: string): void {
       store.commit(
