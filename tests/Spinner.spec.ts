@@ -1,9 +1,10 @@
 import { mount } from "@vue/test-utils";
 import Spinner from "@/components/Spinner.vue";
 
-describe("test Spinner", () => {
-  it("loading text is correct", () => {
+describe("testing Spinner", () => {
+  it("loading text renders correctly", () => {
     const wrapper = mount(Spinner);
-    expect(wrapper.text()).toContain("Загрузка ...");
+    const loaderTextElement = wrapper.find(".loader--text");
+    expect(loaderTextElement.text()).toBe("Загрузка ...");
   });
 });
