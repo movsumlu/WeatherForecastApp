@@ -160,12 +160,12 @@ export default defineComponent({
             (city: ObjectOfCity) => city.city !== droppedCity.city
           );
 
-          store.commit(
-            "SET_CITIES",
-            alphaSortDirect.value
-              ? alphaCitySort(filteredArray)
-              : alphaRevCitySort(filteredArray)
-          );
+          const sortedArray = alphaSortDirect.value
+            ? alphaCitySort(filteredArray)
+            : alphaRevCitySort(filteredArray);
+
+          store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
+          store.commit("SET_CITIES", sortedArray);
         } else {
           store.commit(
             "SET_BIG_CARDS_LIST",
@@ -179,17 +179,12 @@ export default defineComponent({
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           ) {
-            store.commit(
-              "SET_CITIES",
-              alphaSortDirect.value
-                ? alphaCitySort([...cities.value, droppedCity])
-                : alphaRevCitySort([...cities.value, droppedCity])
-            );
+            const sortedArray = alphaSortDirect.value
+              ? alphaCitySort([...cities.value, droppedCity])
+              : alphaRevCitySort([...cities.value, droppedCity]);
 
-            store.commit("SET_FULL_LIST_OF_CITIES", [
-              ...cities.value,
-              droppedCity,
-            ]);
+            store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
+            store.commit("SET_CITIES", sortedArray);
           }
         }
       }
