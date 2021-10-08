@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import App from "@/components/App.vue";
+import Main from "@/components/Main.vue";
+import PageNotFound from "@/components/PageNotFound.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "App",
-    component: App,
+    name: "main",
+    component: Main,
   },
+  { path: "/:pathMatch(.*)*", component: PageNotFound },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
   routes,
+  history: createWebHistory(process.env.BASE_URL),
 });
 
 export default router;
