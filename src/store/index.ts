@@ -4,24 +4,24 @@ import ObjectOfCity from "@/models/Models";
 
 export default createStore({
   state: {
-    cities: [],
-    fullListOfCities: [],
+    smallCardsList: [],
     bigCardsList: [],
+    fullListOfCities: [],
     showLoader: true,
     sortDirect: "alpha",
     filters: [],
   },
   getters: {
-    cities: (state): ObjectOfCity[] => state.cities,
-    fullListOfCities: (state): ObjectOfCity[] => state.fullListOfCities,
+    smallCardsList: (state): ObjectOfCity[] => state.smallCardsList,
     bigCardsList: (state): ObjectOfCity[] => state.bigCardsList,
+    fullListOfCities: (state): ObjectOfCity[] => state.fullListOfCities,
     showLoader: (state): boolean => state.showLoader,
     sortDirect: (state): string => state.sortDirect,
     filters: (state): string[] => state.filters,
   },
   mutations: {
-    SET_CITIES(state, payload: []) {
-      state.cities = payload;
+    SET_SMALL_CARDS_LIST(state, payload: []) {
+      state.smallCardsList = payload;
     },
     SET_FULL_LIST_OF_CITIES(state, payload: []) {
       state.fullListOfCities = payload;
@@ -48,7 +48,7 @@ export default createStore({
             const sortedCities = response.data.cities.sort(
               (a: ObjectOfCity, b: ObjectOfCity) => a.city.localeCompare(b.city)
             );
-            commit("SET_CITIES", sortedCities);
+            commit("SET_SMALL_CARDS_LIST", sortedCities);
             commit("SET_FULL_LIST_OF_CITIES", sortedCities);
             commit("SET_LOADER", false);
           });

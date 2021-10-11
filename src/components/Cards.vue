@@ -1,13 +1,13 @@
 <template>
   <section class="cards">
     <div
-      v-if="!showLoader"
+      v-if="!showLoader && smallCardsList.length"
       class="small-card__container"
       @drop="onDrop($event, 'toSmallCards')"
       @dragenter.prevent
       @dragover.prevent
     >
-      <div v-for="city in cities" :key="city.city">
+      <div v-for="city in smallCardsList" :key="city.city">
         <div
           class="small-card"
           @dragstart="onDragStart($event, city, 'toBigCards')"
@@ -22,6 +22,12 @@
       </div>
       <div v-if="showSmallEmptyCard" class="small-card small-card--empty" />
     </div>
+    <p
+      v-else-if="!showLoader && !smallCardsList.length"
+      class="small-card--empty-text"
+    >
+      Упс, ничего не найдено...
+    </p>
     <Spinner v-else />
     <div
       class="big-card__container"
@@ -92,18 +98,48 @@ export default defineComponent({
     const store = useStore();
     const { alphaCitySort, alphaRevCitySort } = helper.methods;
 
-    store.dispatch("fetchCities");
+    const smallCardsFromLS = JSON.parse(
+      localStorage.getItem("smallCardsOfCities") || "[]"
+    );
+
+    const bigCardsFromLS = JSON.parse(
+      localStorage.getItem("bigCardsOfCities") || "[]"
+    );
+
+    const fullListOfCitiesFromLS = JSON.parse(
+      localStorage.getItem("fullListOfCities") || "[]"
+    );
+
+    if (
+      smallCardsFromLS.length ||
+      bigCardsFromLS.length ||
+      fullListOfCitiesFromLS.length
+    ) {
+      store.commit("SET_SMALL_CARDS_LIST", smallCardsFromLS);
+      store.commit("SET_BIG_CARDS_LIST", bigCardsFromLS);
+      store.commit("SET_FULL_LIST_OF_CITIES", fullListOfCitiesFromLS);
+      store.commit("SET_LOADER", false);
+    } else {
+      store.dispatch("fetchCities");
+    }
 
     let showSmallEmptyCard = ref(false);
     let showBigEmptyCard = ref(false);
 
-    const cities = computed((): ObjectOfCity[] => store.getters.cities);
-    const showLoader = computed((): boolean => store.getters.showLoader);
-    const filters = computed((): string[] => store.getters.filters);
+    const smallCardsList = computed(
+      (): ObjectOfCity[] => store.getters.smallCardsList
+    );
 
     const bigCardsList = computed(
       (): ObjectOfCity[] => store.getters.bigCardsList
     );
+
+    const fullListOfCities = computed(
+      (): ObjectOfCity[] => store.getters.fullListOfCities
+    );
+
+    const filters = computed((): string[] => store.getters.filters);
+    const showLoader = computed((): boolean => store.getters.showLoader);
 
     const filteredBigCards = computed((): ObjectOfCity[] =>
       filters.value.length
@@ -156,16 +192,31 @@ export default defineComponent({
               droppedCity,
             ]);
 
-          const filteredArray = cities.value.filter(
+          const filteredArray: ObjectOfCity[] = smallCardsList.value.filter(
             (city: ObjectOfCity) => city.city !== droppedCity.city
           );
 
-          const sortedArray = alphaSortDirect.value
+          const sortedArray: ObjectOfCity[] = alphaSortDirect.value
             ? alphaCitySort(filteredArray)
             : alphaRevCitySort(filteredArray);
 
+          store.commit("SET_SMALL_CARDS_LIST", sortedArray);
           store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
-          store.commit("SET_CITIES", sortedArray);
+
+          localStorage.setItem(
+            "smallCardsOfCities",
+            JSON.stringify(smallCardsList.value)
+          );
+
+          localStorage.setItem(
+            "bigCardsOfCities",
+            JSON.stringify(bigCardsList.value)
+          );
+
+          localStorage.setItem(
+            "fullListOfCities",
+            JSON.stringify(fullListOfCities.value)
+          );
         } else {
           store.commit(
             "SET_BIG_CARDS_LIST",
@@ -175,16 +226,31 @@ export default defineComponent({
           );
 
           if (
-            !cities.value.some(
+            !smallCardsList.value.some(
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           ) {
             const sortedArray = alphaSortDirect.value
-              ? alphaCitySort([...cities.value, droppedCity])
-              : alphaRevCitySort([...cities.value, droppedCity]);
+              ? alphaCitySort([...smallCardsList.value, droppedCity])
+              : alphaRevCitySort([...smallCardsList.value, droppedCity]);
 
             store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
-            store.commit("SET_CITIES", sortedArray);
+            store.commit("SET_SMALL_CARDS_LIST", sortedArray);
+
+            localStorage.setItem(
+              "smallCardsOfCities",
+              JSON.stringify(smallCardsList.value)
+            );
+
+            localStorage.setItem(
+              "bigCardsOfCities",
+              JSON.stringify(bigCardsList.value)
+            );
+
+            localStorage.setItem(
+              "fullListOfCities",
+              JSON.stringify(fullListOfCities.value)
+            );
           }
         }
       }
@@ -203,12 +269,12 @@ export default defineComponent({
     }
 
     return {
-      showLoader,
-      cities,
+      smallCardsList,
       filteredBigCards,
       showSmallEmptyCard,
       showBigEmptyCard,
       textOfHelp,
+      showLoader,
       onDragStart,
       onDrop,
       windDirect,
@@ -292,6 +358,10 @@ export default defineComponent({
       min-height: 56px;
       background-color: rgba(247, 248, 255, 0.3);
       border: 2px dashed var(--color-border);
+    }
+
+    &--empty-text {
+      margin: 70px 0 0 110px;
     }
   }
 
