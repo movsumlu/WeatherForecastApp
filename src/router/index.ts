@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Main from "@/components/Main.vue";
+import Container from "@/components/Container.vue";
 import PageNotFound from "@/components/PageNotFound.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "main",
-    component: Main,
+    name: "container",
+    component: Container,
   },
   { path: "/:pathMatch(.*)*", component: PageNotFound },
 ];
