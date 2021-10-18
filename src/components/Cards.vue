@@ -153,10 +153,13 @@ export default defineComponent({
       (): boolean => store.getters.sortDirect === "alpha"
     );
 
-    const textOfHelp = computed((): string =>
-      filters.value.length
-        ? "<p>Увы, нет подходящих городов</p>"
-        : "<p>Перетащите сюда города, <br />погода в которых вам интересна</p>"
+    const textOfHelp = computed(
+      (): string =>
+        `<p> ${
+          filters.value.length
+            ? "Увы, нет подходящих городов"
+            : "Перетащите сюда города, <br />погода в которых вам интересна"
+        }</p>`
     );
 
     function onDragStart(

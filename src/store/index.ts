@@ -7,36 +7,36 @@ export default createStore({
     smallCardsList: [],
     bigCardsList: [],
     fullListOfCities: [],
+    filters: [],
     showLoader: true,
     sortDirect: "alpha",
-    filters: [],
   },
   getters: {
     smallCardsList: (state): ObjectOfCity[] => state.smallCardsList,
     bigCardsList: (state): ObjectOfCity[] => state.bigCardsList,
     fullListOfCities: (state): ObjectOfCity[] => state.fullListOfCities,
+    filters: (state): string[] => state.filters,
     showLoader: (state): boolean => state.showLoader,
     sortDirect: (state): string => state.sortDirect,
-    filters: (state): string[] => state.filters,
   },
   mutations: {
-    SET_SMALL_CARDS_LIST(state, payload: []) {
+    SET_SMALL_CARDS_LIST(state, payload) {
       state.smallCardsList = payload;
     },
-    SET_FULL_LIST_OF_CITIES(state, payload: []) {
+    SET_FULL_LIST_OF_CITIES(state, payload) {
       state.fullListOfCities = payload;
     },
-    SET_BIG_CARDS_LIST(state, payload: []) {
+    SET_BIG_CARDS_LIST(state, payload) {
       state.bigCardsList = payload;
     },
-    SET_LOADER(state, payload: boolean) {
+    SET_FILTERS(state, payload) {
+      state.filters = payload;
+    },
+    SET_LOADER(state, payload) {
       state.showLoader = payload;
     },
-    SET_SORT_DIRECTION(state, payload: string) {
+    SET_SORT_DIRECTION(state, payload) {
       state.sortDirect = payload;
-    },
-    SET_FILTERS(state, payload: []) {
-      state.filters = payload;
     },
   },
   actions: {
