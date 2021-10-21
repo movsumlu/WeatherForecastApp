@@ -99,15 +99,15 @@ export default defineComponent({
     const { alphaCitySort, alphaRevCitySort } = helper.methods;
 
     const smallCardsFromLS = JSON.parse(
-      localStorage.getItem("smallCardsOfCities") || "[]"
+      localStorage.getItem("smallCardsFromLS") || "[]"
     );
 
     const bigCardsFromLS = JSON.parse(
-      localStorage.getItem("bigCardsOfCities") || "[]"
+      localStorage.getItem("bigCardsFromLS") || "[]"
     );
 
     const fullListOfCitiesFromLS = JSON.parse(
-      localStorage.getItem("fullListOfCities") || "[]"
+      localStorage.getItem("fullListOfCitiesFromLS") || "[]"
     );
 
     if (
@@ -207,17 +207,17 @@ export default defineComponent({
           store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
 
           localStorage.setItem(
-            "smallCardsOfCities",
+            "smallCardsFromLS",
             JSON.stringify(smallCardsList.value)
           );
 
           localStorage.setItem(
-            "bigCardsOfCities",
+            "bigCardsFromLS",
             JSON.stringify(bigCardsList.value)
           );
 
           localStorage.setItem(
-            "fullListOfCities",
+            "fullListOfCitiesFromLS",
             JSON.stringify(fullListOfCities.value)
           );
         } else {
@@ -241,17 +241,17 @@ export default defineComponent({
             store.commit("SET_SMALL_CARDS_LIST", sortedArray);
 
             localStorage.setItem(
-              "smallCardsOfCities",
+              "smallCardsFromLS",
               JSON.stringify(smallCardsList.value)
             );
 
             localStorage.setItem(
-              "bigCardsOfCities",
+              "bigCardsFromLS",
               JSON.stringify(bigCardsList.value)
             );
 
             localStorage.setItem(
-              "fullListOfCities",
+              "fullListOfCitiesFromLS",
               JSON.stringify(fullListOfCities.value)
             );
           }

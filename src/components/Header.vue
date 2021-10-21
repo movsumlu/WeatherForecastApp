@@ -64,8 +64,18 @@ export default defineComponent({
     const store = useStore();
     const { alphaCitySort, alphaRevCitySort } = helper.methods;
 
-    const seachCityName = ref("");
     const inputFocused = ref(false);
+    const seachCityName = ref(localStorage.getItem("seachNameFromLS") || "");
+
+    store.commit(
+      "SET_SORT_DIRECTION",
+      localStorage.getItem("sordDirectionFromLS") || "alpha"
+    );
+
+    store.commit(
+      "SET_FILTERS",
+      JSON.parse(localStorage.getItem("filtersFromLS") || "[]")
+    );
 
     const smallCardsList = computed(
       (): ObjectOfCity[] => store.getters.smallCardsList
@@ -81,39 +91,43 @@ export default defineComponent({
       inputFocused.value ? "" : "Название города"
     );
 
-    watch(seachCityName, () => {
-      store.commit(
-        "SET_SMALL_CARDS_LIST",
-        fullListOfCities.value.filter((city: ObjectOfCity) =>
-          city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
-        )
-      );
-    });
+    watch(
+      seachCityName,
+      () => {
+        localStorage.setItem("seachNameFromLS", seachCityName.value);
+
+        store.commit(
+          "SET_SMALL_CARDS_LIST",
+          fullListOfCities.value.filter((city: ObjectOfCity) =>
+            city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
+          )
+        );
+      },
+      { immediate: true }
+    );
 
     function updateFilters(value: string): void {
-      store.commit(
-        "SET_FILTERS",
-        filters.value.includes(value)
-          ? filters.value.filter(function (filter: string) {
-              return filter !== value;
-            })
-          : [...filters.value, value]
-      );
+      let filteredFilter = filters.value.includes(value)
+        ? filters.value.filter((filter: string) => filter !== value)
+        : [...filters.value, value];
+
+      localStorage.setItem("filtersFromLS", JSON.stringify(filteredFilter));
+      store.commit("SET_FILTERS", filteredFilter);
     }
 
     function sortAlpha(): void {
+      localStorage.setItem("sordDirectionFromLS", "alpha");
       store.commit("SET_SORT_DIRECTION", "alpha");
       store.commit("SET_SMALL_CARDS_LIST", alphaCitySort(smallCardsList.value));
-      localStorage.setItem("sordDirection", "alpha");
     }
 
     function sortAlphaRev(): void {
+      localStorage.setItem("sordDirectionFromLS", "alphaRev");
       store.commit("SET_SORT_DIRECTION", "alphaRev");
       store.commit(
         "SET_SMALL_CARDS_LIST",
         alphaRevCitySort(smallCardsList.value)
       );
-      localStorage.setItem("sordDirection", "alphaRev");
     }
 
     return {
