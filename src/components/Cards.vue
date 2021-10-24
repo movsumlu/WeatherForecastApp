@@ -14,9 +14,9 @@
           draggable="true"
         >
           <span class="small-card__city"> {{ city.city }} </span>
-          <span class="small-card__temperature"
-            >{{ valueOfTemp(city.temperature) }}°C</span
-          >
+          <span class="small-card__temperature">{{
+            valueOfTemperature(city.temperature)
+          }}</span>
           <span class="icon icon--strips-small" />
         </div>
       </div>
@@ -70,9 +70,9 @@
                 >
               </div>
             </div>
-            <span class="big-card__temperature"
-              >{{ valueOfTemp(city.temperature) }}°C</span
-            >
+            <span class="big-card__temperature">{{
+              valueOfTemperature(city.temperature)
+            }}</span>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, warn } from "vue";
 import { useStore } from "vuex";
 import Spinner from "@/components/Spinner.vue";
 import helper from "@/mixins/helper";
@@ -195,30 +195,26 @@ export default defineComponent({
               droppedCity,
             ]);
 
-          const filteredArray: ObjectOfCity[] = smallCardsList.value.filter(
-            (city: ObjectOfCity) => city.city !== droppedCity.city
+          store.commit(
+            "SET_SMALL_CARDS_LIST",
+            alphaSortDirect.value
+              ? alphaCitySort(
+                  smallCardsList.value.filter(
+                    (city: ObjectOfCity) => city.city !== droppedCity.city
+                  )
+                )
+              : alphaRevCitySort(
+                  smallCardsList.value.filter(
+                    (city: ObjectOfCity) => city.city !== droppedCity.city
+                  )
+                )
           );
 
-          const sortedArray: ObjectOfCity[] = alphaSortDirect.value
-            ? alphaCitySort(filteredArray)
-            : alphaRevCitySort(filteredArray);
-
-          store.commit("SET_SMALL_CARDS_LIST", sortedArray);
-          store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
-
-          localStorage.setItem(
-            "smallCardsFromLS",
-            JSON.stringify(smallCardsList.value)
-          );
-
-          localStorage.setItem(
-            "bigCardsFromLS",
-            JSON.stringify(bigCardsList.value)
-          );
-
-          localStorage.setItem(
-            "fullListOfCitiesFromLS",
-            JSON.stringify(fullListOfCities.value)
+          store.commit(
+            "SET_FULL_LIST_OF_CITIES",
+            fullListOfCities.value.filter((city) =>
+              bigCardsList.value.some((bigCards) => city.city !== bigCards.city)
+            )
           );
         } else {
           store.commit(
@@ -233,38 +229,47 @@ export default defineComponent({
               (city: ObjectOfCity) => city.city === droppedCity.city
             )
           ) {
-            const sortedArray = alphaSortDirect.value
-              ? alphaCitySort([...smallCardsList.value, droppedCity])
-              : alphaRevCitySort([...smallCardsList.value, droppedCity]);
-
-            store.commit("SET_FULL_LIST_OF_CITIES", sortedArray);
-            store.commit("SET_SMALL_CARDS_LIST", sortedArray);
-
-            localStorage.setItem(
-              "smallCardsFromLS",
-              JSON.stringify(smallCardsList.value)
+            store.commit(
+              "SET_SMALL_CARDS_LIST",
+              alphaSortDirect.value
+                ? alphaCitySort([...smallCardsList.value, droppedCity])
+                : alphaRevCitySort([...smallCardsList.value, droppedCity])
             );
 
-            localStorage.setItem(
-              "bigCardsFromLS",
-              JSON.stringify(bigCardsList.value)
-            );
-
-            localStorage.setItem(
-              "fullListOfCitiesFromLS",
-              JSON.stringify(fullListOfCities.value)
+            store.commit(
+              "SET_FULL_LIST_OF_CITIES",
+              alphaSortDirect.value
+                ? alphaCitySort([...fullListOfCities.value, droppedCity])
+                : alphaRevCitySort([...fullListOfCities.value, droppedCity])
             );
           }
         }
+
+        localStorage.setItem(
+          "smallCardsFromLS",
+          JSON.stringify(smallCardsList.value)
+        );
+
+        localStorage.setItem(
+          "bigCardsFromLS",
+          JSON.stringify(bigCardsList.value)
+        );
+
+        localStorage.setItem(
+          "fullListOfCitiesFromLS",
+          JSON.stringify(fullListOfCities.value)
+        );
       }
+    }
+
+    function valueOfTemperature(temperature: number): string {
+      return (
+        (Math.sign(temperature) !== 1 ? temperature : `+${temperature}`) + "°C"
+      );
     }
 
     function windDirect(direct: string): string {
       return direct ? direct + "," : "";
-    }
-
-    function valueOfTemp(temperature: number): number | string {
-      return Math.sign(temperature) !== 1 ? temperature : `+${temperature}`;
     }
 
     function windSpeed(speed: string): string {
@@ -280,8 +285,8 @@ export default defineComponent({
       showLoader,
       onDragStart,
       onDrop,
+      valueOfTemperature,
       windDirect,
-      valueOfTemp,
       windSpeed,
     };
   },
