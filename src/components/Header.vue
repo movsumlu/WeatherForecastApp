@@ -55,7 +55,7 @@
 import { defineComponent, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import helper from "@/mixins/helper";
-import ObjectOfCity from "@/models/Models";
+import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default defineComponent({
   name: "Header",

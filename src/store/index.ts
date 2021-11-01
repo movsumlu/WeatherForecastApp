@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createStore } from "vuex";
-import ObjectOfCity from "@/models/Models";
+import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default createStore({
   state: {
@@ -40,7 +40,7 @@ export default createStore({
     },
   },
   actions: {
-    async fetchCities({ commit }) {
+    async fetchCities({ commit }): Promise<void> {
       try {
         await axios
           .get("https://geo-weather-json.herokuapp.com/db")

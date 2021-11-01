@@ -1,4 +1,4 @@
-export default interface ObjectOfCity {
+export interface ObjectOfCity {
   city: string;
   coordinates: {
     latitude: number;

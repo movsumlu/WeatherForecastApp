@@ -86,7 +86,7 @@ import { defineComponent, ref, computed, warn } from "vue";
 import { useStore } from "vuex";
 import Spinner from "@/components/Spinner.vue";
 import helper from "@/mixins/helper";
-import ObjectOfCity from "@/models/Models";
+import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default defineComponent({
   name: "Cards",

@@ -1,4 +1,4 @@
-import ObjectOfCity from "@/models/Models";
+import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default {
   data: () => ({
