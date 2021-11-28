@@ -23,17 +23,11 @@ body {
   display: flex;
   width: 100%;
   height: 100vh;
-  min-width: 1080px;
-  min-height: 880px;
   overflow: hidden;
 
   &__cards {
     position: relative;
     z-index: 1;
-    flex-shrink: 0;
-    width: 712px;
-    height: 100vh;
-    min-height: 880px;
     overflow: hidden;
     background: var(--color-blue-lightest);
     box-shadow: 0 0 40px rgba(11, 23, 78, 0.5);
@@ -47,7 +41,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     width: 24px;
     height: 24px;
     background-repeat: no-repeat;
