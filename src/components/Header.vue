@@ -65,17 +65,7 @@ export default defineComponent({
     const { alphaCitySort, alphaRevCitySort } = helper.methods;
 
     const inputFocused = ref(false);
-    const seachCityName = ref(localStorage.getItem("seachNameFromLS") || "");
-
-    store.commit(
-      "SET_SORT_DIRECTION",
-      localStorage.getItem("sordDirectionFromLS") || "alpha"
-    );
-
-    store.commit(
-      "SET_FILTERS",
-      JSON.parse(localStorage.getItem("filtersFromLS") || "[]")
-    );
+    const seachCityName = ref("");
 
     const smallCardsList = computed(
       (): ObjectOfCity[] => store.getters.smallCardsList
@@ -94,8 +84,6 @@ export default defineComponent({
     watch(
       seachCityName,
       () => {
-        localStorage.setItem("seachNameFromLS", seachCityName.value);
-
         store.commit(
           "SET_SMALL_CARDS_LIST",
           fullListOfCities.value.filter((city: ObjectOfCity) =>
@@ -106,29 +94,26 @@ export default defineComponent({
       { immediate: true }
     );
 
-    function updateFilters(value: string): void {
+    const updateFilters = (value: string): void => {
       let filteredFilter = filters.value.includes(value)
         ? filters.value.filter((filter: string) => filter !== value)
         : [...filters.value, value];
 
-      localStorage.setItem("filtersFromLS", JSON.stringify(filteredFilter));
       store.commit("SET_FILTERS", filteredFilter);
-    }
+    };
 
-    function sortAlpha(): void {
-      localStorage.setItem("sordDirectionFromLS", "alpha");
+    const sortAlpha = (): void => {
       store.commit("SET_SORT_DIRECTION", "alpha");
       store.commit("SET_SMALL_CARDS_LIST", alphaCitySort(smallCardsList.value));
-    }
+    };
 
-    function sortAlphaRev(): void {
-      localStorage.setItem("sordDirectionFromLS", "alphaRev");
+    const sortAlphaRev = (): void => {
       store.commit("SET_SORT_DIRECTION", "alphaRev");
       store.commit(
         "SET_SMALL_CARDS_LIST",
         alphaRevCitySort(smallCardsList.value)
       );
-    }
+    };
 
     return {
       inputFocused,

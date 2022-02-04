@@ -98,30 +98,7 @@ export default defineComponent({
     const store = useStore();
     const { alphaCitySort, alphaRevCitySort } = helper.methods;
 
-    const smallCardsFromLS = JSON.parse(
-      localStorage.getItem("smallCardsFromLS") || "[]"
-    );
-
-    const bigCardsFromLS = JSON.parse(
-      localStorage.getItem("bigCardsFromLS") || "[]"
-    );
-
-    const fullListOfCitiesFromLS = JSON.parse(
-      localStorage.getItem("fullListOfCitiesFromLS") || "[]"
-    );
-
-    if (
-      smallCardsFromLS.length ||
-      bigCardsFromLS.length ||
-      fullListOfCitiesFromLS.length
-    ) {
-      store.commit("SET_SMALL_CARDS_LIST", smallCardsFromLS);
-      store.commit("SET_BIG_CARDS_LIST", bigCardsFromLS);
-      store.commit("SET_FULL_LIST_OF_CITIES", fullListOfCitiesFromLS);
-      store.commit("SET_LOADER", false);
-    } else {
-      store.dispatch("fetchCities");
-    }
+    store.dispatch("fetchCities");
 
     let showSmallEmptyCard = ref(false);
     let showBigEmptyCard = ref(false);
@@ -162,11 +139,11 @@ export default defineComponent({
         }</p>`
     );
 
-    function onDragStart(
+    const onDragStart = (
       event: DragEvent,
       city: ObjectOfCity,
       type: string
-    ): void {
+    ): void => {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
 
@@ -174,9 +151,9 @@ export default defineComponent({
           ? (showBigEmptyCard.value = true)
           : (showSmallEmptyCard.value = true);
       }
-    }
+    };
 
-    function onDrop(event: DragEvent, type: string): void {
+    const onDrop = (event: DragEvent, type: string): void => {
       if (event.dataTransfer) {
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")
@@ -244,37 +221,15 @@ export default defineComponent({
             );
           }
         }
-
-        localStorage.setItem(
-          "smallCardsFromLS",
-          JSON.stringify(smallCardsList.value)
-        );
-
-        localStorage.setItem(
-          "bigCardsFromLS",
-          JSON.stringify(bigCardsList.value)
-        );
-
-        localStorage.setItem(
-          "fullListOfCitiesFromLS",
-          JSON.stringify(fullListOfCities.value)
-        );
       }
-    }
+    };
 
-    function valueOfTemperature(temperature: number): string {
-      return (
-        (Math.sign(temperature) !== 1 ? temperature : `+${temperature}`) + "°C"
-      );
-    }
+    const valueOfTemperature = (temperature: number): string =>
+      (Math.sign(temperature) !== 1 ? temperature : `+${temperature}`) + "°C";
 
-    function windDirect(direct: string): string {
-      return direct ? direct + "," : "";
-    }
+    const windDirect = (direct: string) => (direct ? direct + "," : "");
 
-    function windSpeed(speed: string): string {
-      return speed ? speed + " м/с" : "";
-    }
+    const windSpeed = (speed: string) => (speed ? speed + " м/с" : "");
 
     return {
       smallCardsList,
