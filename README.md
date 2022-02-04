@@ -2,7 +2,7 @@
 
 by Vue 3 / TypeScript
 
-movsumlu.github.io/WeatherForecastApp/
+https://movsumlu.github.io/WeatherForecastApp/
 
 ## project setup
 
