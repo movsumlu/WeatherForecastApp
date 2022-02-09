@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Container from "@/components/Container.vue";
-import PageNotFound from "@/components/PageNotFound.vue";
+import Page_404 from "@/components/Page_404.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     name: "container",
     component: Container,
   },
-  { path: "/:pathMatch(.*)*", component: PageNotFound },
+  { path: "/:pathMatch(.*)*", component: Page_404 },
 ];
 
 const router = createRouter({

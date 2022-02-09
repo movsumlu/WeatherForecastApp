@@ -1,5 +1,5 @@
 <template>
-  <div class="notFoundPage">
+  <div class="page_404">
     <div class="text"><b>404 |</b> страница не найдена</div>
     <a class="button" @click="$router.push({ name: 'container' })"
       >Вернуться на главную страницу</a
@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-.notFoundPage {
+.page_404 {
   width: 100%;
   display: flex;
   flex-direction: column;
