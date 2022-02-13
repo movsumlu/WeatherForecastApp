@@ -65,7 +65,7 @@
               <div class="big-card__wind">
                 <span class="icon icon--wind" />
                 <span class="big-card__wind-info"
-                  >{{ windDirect(city.wind.direct) }}
+                  >{{ windDirect(city.wind.direction) }}
                   {{ windSpeed(city.wind.speed) }}</span
                 >
               </div>
@@ -116,9 +116,9 @@ export default defineComponent({
     );
 
     const filters = computed((): string[] => store.getters.filters);
-    const showLoader = computed((): boolean => store.getters.showLoader);
+    const showLoader = computed(() => store.getters.showLoader);
 
-    const filteredBigCards = computed((): ObjectOfCity[] =>
+    const filteredBigCards = computed(() =>
       filters.value.length
         ? bigCardsList.value.filter((bigCard: any) =>
             filters.value.every((filter: string) => bigCard.weather[filter])
@@ -127,7 +127,7 @@ export default defineComponent({
     );
 
     const alphaSortDirect = computed(
-      (): boolean => store.getters.sortDirect === "alpha"
+      () => store.getters.sortDirect === "alpha"
     );
 
     const textOfHelp = computed(
@@ -143,7 +143,7 @@ export default defineComponent({
       event: DragEvent,
       city: ObjectOfCity,
       type: string
-    ): void => {
+    ) => {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
 
@@ -153,7 +153,7 @@ export default defineComponent({
       }
     };
 
-    const onDrop = (event: DragEvent, type: string): void => {
+    const onDrop = (event: DragEvent, type: string) => {
       if (event.dataTransfer) {
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")
@@ -177,12 +177,12 @@ export default defineComponent({
             alphaSortDirect.value
               ? alphaCitySort(
                   smallCardsList.value.filter(
-                    (city: ObjectOfCity) => city.city !== droppedCity.city
+                    (city) => city.city !== droppedCity.city
                   )
                 )
               : alphaRevCitySort(
                   smallCardsList.value.filter(
-                    (city: ObjectOfCity) => city.city !== droppedCity.city
+                    (city) => city.city !== droppedCity.city
                   )
                 )
           );
@@ -196,15 +196,11 @@ export default defineComponent({
         } else {
           store.commit(
             "SET_BIG_CARDS_LIST",
-            bigCardsList.value.filter(
-              (city: ObjectOfCity) => city.city !== droppedCity.city
-            )
+            bigCardsList.value.filter((city) => city.city !== droppedCity.city)
           );
 
           if (
-            !smallCardsList.value.some(
-              (city: ObjectOfCity) => city.city === droppedCity.city
-            )
+            !smallCardsList.value.some((city) => city.city === droppedCity.city)
           ) {
             store.commit(
               "SET_SMALL_CARDS_LIST",
@@ -227,9 +223,10 @@ export default defineComponent({
     const valueOfTemperature = (temperature: number): string =>
       (Math.sign(temperature) !== 1 ? temperature : `+${temperature}`) + "°C";
 
-    const windDirect = (direct: string) => (direct ? direct + "," : "");
+    const windDirect = (direction: string) =>
+      direction ? `${direction}, ` : "";
 
-    const windSpeed = (speed: string) => (speed ? speed + " м/с" : "");
+    const windSpeed = (speed: string) => (speed ? `${speed} м/с` : "");
 
     return {
       smallCardsList,

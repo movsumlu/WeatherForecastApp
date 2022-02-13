@@ -12,12 +12,12 @@ export default createStore({
     sortDirect: "alpha",
   },
   getters: {
-    smallCardsList: (state): ObjectOfCity[] => state.smallCardsList,
-    bigCardsList: (state): ObjectOfCity[] => state.bigCardsList,
-    fullListOfCities: (state): ObjectOfCity[] => state.fullListOfCities,
-    filters: (state): string[] => state.filters,
-    showLoader: (state): boolean => state.showLoader,
-    sortDirect: (state): string => state.sortDirect,
+    smallCardsList: (state) => state.smallCardsList,
+    bigCardsList: (state) => state.bigCardsList,
+    fullListOfCities: (state) => state.fullListOfCities,
+    filters: (state) => state.filters,
+    showLoader: (state) => state.showLoader,
+    sortDirect: (state) => state.sortDirect,
   },
   mutations: {
     SET_SMALL_CARDS_LIST(state, payload) {
@@ -40,7 +40,7 @@ export default createStore({
     },
   },
   actions: {
-    async fetchCities({ commit }): Promise<void> {
+    async fetchCities({ commit }) {
       try {
         await axios
           .get("https://geo-weather-json.herokuapp.com/db")

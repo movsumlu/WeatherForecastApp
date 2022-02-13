@@ -67,18 +67,14 @@ export default defineComponent({
     const inputFocused = ref(false);
     const seachCityName = ref("");
 
-    const smallCardsList = computed(
-      (): ObjectOfCity[] => store.getters.smallCardsList
-    );
+    const smallCardsList = computed(() => store.getters.smallCardsList);
 
-    const fullListOfCities = computed(
-      (): ObjectOfCity[] => store.getters.fullListOfCities
-    );
+    const fullListOfCities = computed(() => store.getters.fullListOfCities);
 
-    const filters = computed((): string[] => store.getters.filters);
+    const filters = computed(() => store.getters.filters);
 
-    const placeholderText = computed((): string =>
-      inputFocused.value ? "" : "Название города"
+    const placeholderText = computed(() =>
+      !inputFocused.value ? "Название города" : ""
     );
 
     watch(
@@ -94,7 +90,7 @@ export default defineComponent({
       { immediate: true }
     );
 
-    const updateFilters = (value: string): void => {
+    const updateFilters = (value: string) => {
       let filteredFilter = filters.value.includes(value)
         ? filters.value.filter((filter: string) => filter !== value)
         : [...filters.value, value];
@@ -102,12 +98,12 @@ export default defineComponent({
       store.commit("SET_FILTERS", filteredFilter);
     };
 
-    const sortAlpha = (): void => {
+    const sortAlpha = () => {
       store.commit("SET_SORT_DIRECTION", "alpha");
       store.commit("SET_SMALL_CARDS_LIST", alphaCitySort(smallCardsList.value));
     };
 
-    const sortAlphaRev = (): void => {
+    const sortAlphaRev = () => {
       store.commit("SET_SORT_DIRECTION", "alphaRev");
       store.commit(
         "SET_SMALL_CARDS_LIST",
