@@ -81,12 +81,13 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="js">
+
 import { defineComponent, ref, computed, warn } from "vue";
 import { useStore } from "vuex";
 import Spinner from "@/components/Spinner.vue";
 import helper from "@/mixins/helper";
-import { ObjectOfCity } from "@/types/WFTypes.interface";
+
 
 export default defineComponent({
   name: "Cards",
@@ -104,24 +105,24 @@ export default defineComponent({
     let showBigEmptyCard = ref(false);
 
     const smallCardsList = computed(
-      (): ObjectOfCity[] => store.getters.smallCardsList
+      () => store.getters.smallCardsList
     );
 
     const bigCardsList = computed(
-      (): ObjectOfCity[] => store.getters.bigCardsList
+      () => store.getters.bigCardsList
     );
 
     const fullListOfCities = computed(
-      (): ObjectOfCity[] => store.getters.fullListOfCities
+      () => store.getters.fullListOfCities
     );
 
-    const filters = computed((): string[] => store.getters.filters);
+    const filters = computed(() => store.getters.filters);
     const showLoader = computed(() => store.getters.showLoader);
 
     const filteredBigCards = computed(() =>
       filters.value.length
-        ? bigCardsList.value.filter((bigCard: any) =>
-            filters.value.every((filter: string) => bigCard.weather[filter])
+        ? bigCardsList.value.filter((bigCard) =>
+            filters.value.every((filter) => bigCard.weather[filter])
           )
         : bigCardsList.value
     );
@@ -131,7 +132,7 @@ export default defineComponent({
     );
 
     const textOfHelp = computed(
-      (): string =>
+      () =>
         `<p> ${
           filters.value.length
             ? "Увы, нет подходящих городов"
@@ -140,9 +141,9 @@ export default defineComponent({
     );
 
     const onDragStart = (
-      event: DragEvent,
-      city: ObjectOfCity,
-      type: string
+      event,
+      city,
+      type
     ) => {
       if (event.dataTransfer) {
         event.dataTransfer.setData("droppedCity", JSON.stringify(city));
@@ -153,7 +154,7 @@ export default defineComponent({
       }
     };
 
-    const onDrop = (event: DragEvent, type: string) => {
+    const onDrop = (event, type) => {
       if (event.dataTransfer) {
         const droppedCity = JSON.parse(
           event.dataTransfer.getData("droppedCity")
@@ -164,7 +165,7 @@ export default defineComponent({
         if (type === "toBigCards") {
           if (
             !bigCardsList.value.some(
-              (city: ObjectOfCity) => city.city === droppedCity.city
+              (city) => city.city === droppedCity.city
             )
           )
             store.commit("SET_BIG_CARDS_LIST", [
@@ -220,13 +221,13 @@ export default defineComponent({
       }
     };
 
-    const valueOfTemperature = (temperature: number): string =>
+    const valueOfTemperature = (temperature) =>
       (Math.sign(temperature) !== 1 ? temperature : `+${temperature}`) + "°C";
 
-    const windDirect = (direction: string) =>
+    const windDirect = (direction) =>
       direction ? `${direction}, ` : "";
 
-    const windSpeed = (speed: string) => (speed ? `${speed} м/с` : "");
+    const windSpeed = (speed) => (speed ? `${speed} м/с` : "");
 
     return {
       smallCardsList,

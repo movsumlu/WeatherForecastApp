@@ -1,6 +1,6 @@
 ### Weather Forecast App
 
-by Vue 3 / Vuex / TypeScript
+by Vue 3 / Vuex
 
 #### [movsumlu.github.io/WeatherForecastApp](https://movsumlu.github.io/WeatherForecastApp/)
 

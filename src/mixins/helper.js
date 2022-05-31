@@ -1,5 +1,3 @@
-import { ObjectOfCity } from "@/types/WFTypes.interface";
-
 export default {
   data: () => ({
     weatherConditions: [
@@ -27,13 +25,13 @@ export default {
     ],
   }),
   methods: {
-    alphaCitySort(array: ObjectOfCity[]) {
-      return array.sort((a: ObjectOfCity, b: ObjectOfCity) =>
+    alphaCitySort(array) {
+      return array.sort((a, b) =>
         a.city.localeCompare(b.city)
       );
     },
-    alphaRevCitySort(array: ObjectOfCity[]) {
-      return array.sort((a: ObjectOfCity, b: ObjectOfCity) =>
+    alphaRevCitySort(array) {
+      return array.sort((a, b) =>
         b.city.localeCompare(a.city)
       );
     },

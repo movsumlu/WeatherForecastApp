@@ -6,7 +6,7 @@
   <Map />
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Header from "@/components/Header.vue";
 import Cards from "@/components/Cards.vue";
 import Map from "@/components/Map.vue";

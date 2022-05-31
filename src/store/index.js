@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createStore } from "vuex";
-import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default createStore({
   state: {
@@ -46,7 +45,7 @@ export default createStore({
           .get("https://geo-weather-json.herokuapp.com/db")
           .then((response) => {
             const sortedCities = response.data.cities.sort(
-              (a: ObjectOfCity, b: ObjectOfCity) => a.city.localeCompare(b.city)
+              (a, b) => a.city.localeCompare(b.city)
             );
             commit("SET_SMALL_CARDS_LIST", sortedCities);
             commit("SET_FULL_LIST_OF_CITIES", sortedCities);

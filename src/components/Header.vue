@@ -51,11 +51,10 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import helper from "@/mixins/helper";
-import { ObjectOfCity } from "@/types/WFTypes.interface";
 
 export default defineComponent({
   name: "Header",
@@ -82,7 +81,7 @@ export default defineComponent({
       () => {
         store.commit(
           "SET_SMALL_CARDS_LIST",
-          fullListOfCities.value.filter((city: ObjectOfCity) =>
+          fullListOfCities.value.filter((city) =>
             city.city.toLowerCase().includes(seachCityName.value.toLowerCase())
           )
         );
@@ -90,9 +89,9 @@ export default defineComponent({
       { immediate: true }
     );
 
-    const updateFilters = (value: string) => {
+    const updateFilters = (value) => {
       let filteredFilter = filters.value.includes(value)
-        ? filters.value.filter((filter: string) => filter !== value)
+        ? filters.value.filter((filter) => filter !== value)
         : [...filters.value, value];
 
       store.commit("SET_FILTERS", filteredFilter);
